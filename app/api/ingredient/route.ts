@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
         const ingredients = await db.ingredient.findMany({
             orderBy: {
