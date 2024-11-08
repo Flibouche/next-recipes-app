@@ -1,11 +1,51 @@
-import React from 'react'
+"use client";
+
+import { useState } from 'react'
 
 const AddIngredient = () => {
+    const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('/api/ingredient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+            });
+
+            if (response.ok) {
+                setMessage('Ingredient added successfully');
+                setName('');
+            } else {
+                const errorText = await response.text();
+                setMessage(`Error: ${errorText}`);
+            }
+        } catch (error) {
+            setMessage(`Error: ${error}`);
+        }
+    }
+
     return (
         <div>
             <h1>Add an ingredient</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type='text'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder='Name of the ingredient'
+                    required
+                />
+                <button type='submit'>Add ingredient</button>
+            </form>
+            {message && <p>{message}</p>}
         </div>
-    )
-}
+    );
+};
 
 export default AddIngredient

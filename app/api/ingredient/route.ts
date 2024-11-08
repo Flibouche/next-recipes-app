@@ -9,7 +9,7 @@ export async function GET() {
             }
         });
 
-        return NextResponse.json(ingredients);
+        return NextResponse.json(ingredients, { status: 200 });
     } catch (error) {
         console.log("[INGREDIENTS]", error);
         return new NextResponse("Internal Error", { status: 500 });
@@ -18,8 +18,19 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     try {
-        
+        const { name } = await req.json();
+
+        if (!name) {
+            return new NextResponse("Name is required", { status: 400 });
+        }
+
+        const newIngredient = await db.ingredient.create({
+            data: { name }
+        })
+
+        return NextResponse.json(newIngredient, { status: 201 });
     } catch (error) {
-        
+        console.log("[INGREDIENTS]", error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }
