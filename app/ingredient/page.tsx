@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 const Ingredient = () => {
@@ -16,6 +17,9 @@ const Ingredient = () => {
     return (
         <>
             <h1>Ingredients :</h1>
+            <nav>
+                <Link href='/ingredient/add'>Add ingredient</Link>
+            </nav>
             <div>
                 {ingredients.map((ingredient: any) => (
                     <div key={ingredient.id}>

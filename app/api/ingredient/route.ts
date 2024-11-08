@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
     try {
@@ -13,5 +13,13 @@ export async function GET() {
     } catch (error) {
         console.log("[INGREDIENTS]", error);
         return new NextResponse("Internal Error", { status: 500 });
+    }
+}
+
+export async function POST(req: NextRequest) {
+    try {
+        
+    } catch (error) {
+        
     }
 }
