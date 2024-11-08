@@ -4,28 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-    {
-        name: 'Home',
-        path: '/',
-    },
-    {
-        name: 'recipes',
-        path: '/recipe',
-    },
-    {
-        name: 'ingredients',
-        path: '/ingredient',
-    },
-    {
-        name: 'blog',
-        path: '/blog',
-    },
+    { name: 'Home', path: '/', },
+    { name: 'recipes', path: '/recipe', },
+    { name: 'ingredients', path: '/ingredient', },
+    { name: 'blog', path: '/blog', },
 ];
 
 const Nav = () => {
     const pathname = usePathname();
     return (
-        <nav className="flex gap-8">
+        <nav className="flex gap-8" aria-label='Desktop navigation'>
             {links.map((link, index) => {
                 return (
                     <Link
