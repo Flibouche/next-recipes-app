@@ -14,9 +14,11 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
     return (
         <html lang="en">
             <body>
-                <Header />
-                {children}
-                <Footer />
+                <main className="container">
+                    <Header />
+                    {children}
+                    <Footer />
+                </main>
             </body>
         </html>
     );
