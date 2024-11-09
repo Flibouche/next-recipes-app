@@ -1,0 +1,9 @@
+model Recipe {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    steps String[]
+    cookingTime Int
+    numberOfServings Int
+
+    ingredients RecipeIngredient[]
+}
