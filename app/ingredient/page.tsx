@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import ErrorDisplay from '@/components/ErrorDisplay';
 
 const Ingredient = () => {
     const [ingredients, setIngredients] = useState([]);
@@ -10,17 +9,25 @@ const Ingredient = () => {
 
     useEffect(() => {
         const fetchIngredients = async () => {
-            const response = await fetch('/api/ingredient');
-            if (!response.ok) {
-                throw new Error('Something went wrong while fetching ingredients');
+            try {
+                const response = await fetch('/api/ingredient');
+                if (!response.ok) {
+                    setError('Failed to fetch ingredients');
+                }
+
+                const data = await response.json();
+
+                setIngredients(data);
+            } catch (error) {
+                setError(error instanceof Error ? error.message : 'An error occurred');
             }
-
-            const data = await response.json();
-
-            setIngredients(data);
         }
         fetchIngredients();
     }, []);
+
+    if (error) {
+        throw new Error(error);
+    }
 
     return (
         <>
