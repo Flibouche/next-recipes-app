@@ -1,0 +1,10 @@
+model RecipeStep {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    recipeId    String @db.ObjectId
+    stepNumber  Int
+    description String
+    duration    Int?
+    recipe      Recipe @relation(fields: [recipeId], references: [id])
+
+    @@index([recipeId])
+}

@@ -1,9 +1,8 @@
 model Recipe {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    name String
-    steps String[]
-    cookingTime Int
+    id               String             @id @default(auto()) @map("_id") @db.ObjectId
+    name             String
+    cookingTime      Int
     numberOfServings Int
-
-    ingredients RecipeIngredient[]
+    ingredients      RecipeIngredient[]
+    steps            RecipeStep[]
 }
