@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { checkUserRole } from "../utils/userUtils";
-import { useSession } from "@clerk/nextjs";
+import { useSession, useUser } from "@clerk/nextjs";
 
 export default function Home() {
     const { session } = useSession();
+    const { user } = useUser();
     const userRole = checkUserRole(session);
 
     return (
@@ -15,6 +16,12 @@ export default function Home() {
                 <p>Welcome, you are connected !</p>
             ) : (
                 <p>Welcome, you are not connected !</p>
+            )}
+
+            {user?.publicMetadata?.role ? (
+                <p className="mt-2 text-red-700">{String(user.publicMetadata.role)}</p>
+            ) : (
+                <p className="mt-2 text-red-500">Aucune description n'est encore définie.</p>
             )}
         </section>
     );
