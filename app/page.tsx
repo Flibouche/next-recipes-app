@@ -23,6 +23,11 @@ export default function Home() {
             ) : (
                 <p className="mt-2 text-red-500">Aucune description n'est encore définie.</p>
             )}
+            {user?.publicMetadata?.description ? (
+                <p className="mt-2 text-red-700">{String(user.publicMetadata.description)}</p>
+            ) : (
+                <p className="mt-2 text-red-500">Aucune description n'est encore définie.</p>
+            )}
         </section>
     );
 }

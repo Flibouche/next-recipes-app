@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
     try {
         const ingredients = await db.ingredient.findMany({
             orderBy: {
@@ -16,9 +16,9 @@ export async function GET() {
     }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
-        const { name } = await req.json();
+        const { name } = await request.json();
 
         if (!name) {
             return new NextResponse("Name is required", { status: 400 });
