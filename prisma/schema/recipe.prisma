@@ -1,8 +1,13 @@
 model Recipe {
     id               String             @id @default(auto()) @map("_id") @db.ObjectId
+    categoryId       String             @db.ObjectId
     name             String
+    imageUrl         String?
     cookingTime      Int
     numberOfServings Int
+    category         Category           @relation(fields: [categoryId], references: [id])
     ingredients      RecipeIngredient[]
     steps            RecipeStep[]
+
+    @@index([categoryId])
 }
