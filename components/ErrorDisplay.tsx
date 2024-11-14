@@ -1,7 +1,4 @@
-interface ErrorDisplayProps {
-    message: string
-    reset: () => void
-}
+import { ErrorDisplayProps } from "@/lib/types/types"
 
 const ErrorDisplay = ({ message, reset }: ErrorDisplayProps) => {
     return (
