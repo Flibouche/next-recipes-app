@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { checkIsExisting } from '@/lib/validators/db-validators';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
@@ -26,11 +27,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         }
 
         // 2. Je vérifie si l'ingrédient existe déjà
-        const existing = await db.ingredient.findUnique({
-            where: { name: name.trim() }
-        })
-
-        if (existing) {
+        const isExisting = await checkIsExisting('ingredient', name);
+        if (isExisting) {
             return new NextResponse("An ingredient with this name already exists", { status: 409 });
         }
 
