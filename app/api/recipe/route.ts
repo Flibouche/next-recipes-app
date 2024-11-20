@@ -44,16 +44,17 @@ export async function POST(req: NextRequest) {
                 cookingTime,
                 numberOfServings,
                 ingredients: {
-                    create: ingredients.map((ingredient: { ingredientId: string; quantity: number; unit: string }) => ({
+                    create: ingredients.map((ingredient: { ingredientId: string; quantity: string; unit: string }) => ({
                         ingredientId: ingredient.ingredientId,
-                        quantity: ingredient.quantity,
+                        quantity: parseFloat(ingredient.quantity),
                         unit: ingredient.unit
                     })),
                 },
                 steps: {
-                    create: steps.map((step: string, index: number) => ({
+                    create: steps.map((step: { description: string; duration: number }, index: number) => ({
                         stepNumber: index + 1,
-                        description: step,
+                        description: step.description,
+                        duration: step.duration,
                     })),
                 },
             },

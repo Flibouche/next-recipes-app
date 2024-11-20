@@ -36,7 +36,7 @@ const Ingredient = () => {
                 <Link href='/ingredient/add'>Add ingredient</Link>
             </nav>
             <div>
-                {ingredients.map((ingredient: any) => (
+                {ingredients.map((ingredient: { id: string, name: string }) => (
                     <div key={ingredient.id}>
                         <h2>{ingredient.name}</h2>
                     </div>
