@@ -57,7 +57,6 @@ const AddRecipe = () => {
         fetchIngredients();
     }, []);
 
-    //* Ingredients
     //#region Ingredients
 
     type IngredientField = 'ingredientId' | 'quantity' | 'unit';
@@ -82,7 +81,6 @@ const AddRecipe = () => {
 
     //#endregion
 
-    //* Steps
     //#region Steps
 
     // Fonction pour gérer le changement d'un champ spécifique d'une étape
