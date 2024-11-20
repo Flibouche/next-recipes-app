@@ -1,34 +1,62 @@
 "use client";
 
-import FormInput from '@/components/FormInput';
 import { useEffect, useState } from 'react';
+import { z } from 'zod';
+
+// Components
+import FormInput from '@/components/FormInput';
 
 const AddRecipe = () => {
+    //#region Interfaces / Types
+    interface Ingredient {
+        ingredientId: string;
+        quantity: string;
+        unit: string;
+    }
+
+    interface Step {
+        stepNumber: number;
+        description: string;
+        duration: number;
+    }
+    //#endregion
+
+    //#region States
+    // States for recipe
     const [name, setName] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [categories, setCategories] = useState([]);
     const [imageUrl, setImageUrl] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
     const [numberOfServings, setNumberOfServings] = useState(0);
-    const [ingredients, setIngredients] = useState([
+
+    // States for ingredients
+    const [ingredients, setIngredients] = useState<Ingredient[]>([
         { ingredientId: '', quantity: '', unit: '' },
     ]);
     const [availableIngredients, setAvailableIngredients] = useState([]);
     const units = ["CUP", "GRAM", "KILOGRAM", "LITER", "CENTILITER", "MILLILITER", "PIECE"];
 
-    type Step = {
-        stepNumber: number;
-        description: string;
-        duration: number;
-    }
-
+    // States for steps
     const [steps, setSteps] = useState<Step[]>([
         { stepNumber: 1, description: '', duration: 0 },
     ]);
 
+    // State for error messages
     const [message, setMessage] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState('');
+    const [errors, setErrors] = useState<{
+        name?: string;
+        categoryId?: string;
+        imageUrl?: string;
+        cookingTime?: string;
+        numberOfServings?: string;
+        ingredients?: string[];
+        steps?: string[];
+    }>({});
+    //#endregion
 
+    //#region Fetching data
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -56,13 +84,11 @@ const AddRecipe = () => {
         };
         fetchIngredients();
     }, []);
+    //#endregion
 
     //#region Ingredients
-
-    type IngredientField = 'ingredientId' | 'quantity' | 'unit';
-
     // Fonction pour gérer le changement d'un champ spécifique d'un ingrédient
-    const handleIngredientChange = (index: number, field: IngredientField, value: string) => {
+    const handleIngredientChange = (index: number, field: keyof Ingredient, value: string) => {
         const updatedIngredients = [...ingredients]; // Création d'une copie du tableau des ingrédients pour éviter de muter l'état directement        
         updatedIngredients[index][field] = value; // Mise à jour du champ spécifié de l'ingrédient à l'index donné
         setIngredients(updatedIngredients);// Mise à jour de l'état avec le tableau des ingrédients modifié
@@ -78,13 +104,11 @@ const AddRecipe = () => {
         const updatedIngredients = ingredients.filter((_, i) => i !== index); // Filtrage des ingrédients pour exclure celui à l'index donné       
         setIngredients(updatedIngredients); // Mise à jour de l'état avec le tableau filtré (sans l'ingrédient supprimé)
     };
-
     //#endregion
 
     //#region Steps
-
     // Fonction pour gérer le changement d'un champ spécifique d'une étape
-    const handleStepChange = (index: number, field: 'description' | 'duration', value: string | number) => {
+    const handleStepChange = (index: number, field: keyof Step, value: string | number) => {
         const updatedSteps = [...steps];
         if (field === 'description') {
             updatedSteps[index].description = value as string;
@@ -104,20 +128,58 @@ const AddRecipe = () => {
         const updatedSteps = steps.filter((_, i) => i !== index);
         setSteps(updatedSteps);
     }
-
     //#endregion
 
+    //#region Schema validation
+    const recipeSchema = z.object({
+        name: z.string({ required_error: "Name field is missing" }).min(1, 'Recipe name is required'),
+        categoryId: z.string({ required_error: "Category field is missing" }).min(1, 'Category is required'),
+        imageUrl: z.string({ required_error: "Image field is missing" }).optional(),
+        cookingTime: z.number({ required_error: "Cooking time field is missing" }).min(1, 'Cooking time must be greater than 0'),
+        numberOfServings: z.number({ required_error: "Number of servings field is missing" }).min(1, 'Number of servings must be greater than 0'),
+        ingredients: z.array(
+            z.object({
+                ingredientId: z.string({ required_error: "Ingredient field is missing" }).min(1, 'Ingredient is required'),
+                quantity: z.string({ required_error: "Quantity field is missing" }).min(1, 'Quantity must be greater than 0'),
+                unit: z.string({ required_error: "Unit field is missing" }).min(1, 'Unit is required'),
+            })
+        ).min(1, 'At least one ingredient is required'),
+        steps: z.array(
+            z.object({
+                stepNumber: z.number(),
+                description: z.string({ required_error: "Description field is missing" }).min(1, 'Description is required'),
+                duration: z.number({ required_error: "Duration field is missing" }).min(1, 'Duration must be greater than 0'),
+            })
+        ).min(1, 'At least one step is required'),
+    });
+    //#endregion
+
+    //#region Submission
     // Fonction pour soumettre le formulaire
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const recipeData = {
+            name,
+            categoryId,
+            imageUrl,
+            cookingTime,
+            numberOfServings,
+            ingredients,
+            steps,
+        };
+
+        const newErrors: { [key: string]: string } = {};
+
         try {
+            recipeSchema.parse(recipeData);
+
             const response = await fetch('/api/recipe', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, categoryId, imageUrl, cookingTime, numberOfServings, ingredients, steps }),
+                body: JSON.stringify(recipeData),
             });
 
             if (response.ok) {
@@ -129,19 +191,26 @@ const AddRecipe = () => {
                 setNumberOfServings(0);
                 setIngredients([{ ingredientId: '', quantity: '', unit: '' }]);
                 setSteps([{ stepNumber: 1, description: '', duration: 0 }]);
+                setErrors({});
             } else {
                 const errorText = await response.text();
                 setMessage(`Error: ${errorText}`);
             }
         } catch (error) {
-            console.log('Error in handleSubmit:', error);
-            setMessage(`Error: ${error}`);
+            if (error instanceof z.ZodError) {
+                error.errors.forEach((error) => {
+                    if (error.path.length > 0) {
+                        newErrors[error.path[0]] = error.message;
+                    }
+                });
+                setErrors(newErrors);
+            } else {
+                console.log('Error in handleSubmit:', error);
+                setMessage(`Error: ${error}`);
+            }
         }
     };
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    //#endregion
 
     return (
         <div className="p-4 bg-red-200 text-black">
@@ -157,6 +226,7 @@ const AddRecipe = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     placeholder="Name of the recipe"
                 />
+                {errors.name && <p className="text-red-500">{errors.name}</p>}
 
                 {/* Category */}
                 <div className="flex flex-col">
@@ -175,6 +245,7 @@ const AddRecipe = () => {
                         ))}
                     </select>
                 </div>
+                {errors.categoryId && <p className="text-red-500">{errors.categoryId}</p>}
 
                 {/* ImageUrl */}
                 <FormInput
@@ -186,6 +257,7 @@ const AddRecipe = () => {
                     onChange={(e) => setImageUrl(e.target.value)}
                     placeholder="Image URL"
                 />
+                {errors.imageUrl && <p className="text-red-500">{errors.imageUrl}</p>}
 
                 {/* Cooking Time */}
                 <FormInput
@@ -197,6 +269,7 @@ const AddRecipe = () => {
                     onChange={(e) => setCookingTime(parseInt(e.target.value, 10))}
                     placeholder="Cooking Time"
                 />
+                {errors.cookingTime && <p className="text-red-500">{errors.cookingTime}</p>}
 
                 {/* Number of servings */}
                 <FormInput
@@ -208,6 +281,7 @@ const AddRecipe = () => {
                     onChange={(e) => setNumberOfServings(parseInt(e.target.value, 10))}
                     placeholder="Number of servings"
                 />
+                {errors.numberOfServings && <p className="text-red-500">{errors.numberOfServings}</p>}
 
                 {/* Ingredients */}
                 <div className="space-y-4">
@@ -265,6 +339,7 @@ const AddRecipe = () => {
                         Add Ingredient
                     </button>
                 </div>
+                {errors.ingredients && <p className="text-red-500">{errors.ingredients}</p>}
 
                 {/* Steps */}
                 <div className='space-y-4'>
@@ -304,6 +379,9 @@ const AddRecipe = () => {
                         Add step
                     </button>
                 </div>
+                {errors.steps && <p className="text-red-500">{errors.steps}</p>}
+
+                {/* Submit button */}
 
                 <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
                     Add Recipe
@@ -311,6 +389,7 @@ const AddRecipe = () => {
             </form>
 
             {message && <p className="mt-4">{message}</p>}
+            {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
     );
 };
