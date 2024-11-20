@@ -7,7 +7,7 @@ import { z } from 'zod';
 import FormInput from '@/components/FormInput';
 
 const AddRecipe = () => {
-    //#region Interfaces / Types
+    //#region //* INTERFACES / TYPES
     interface Ingredient {
         ingredientId: string;
         quantity: string;
@@ -21,8 +21,8 @@ const AddRecipe = () => {
     }
     //#endregion
 
-    //#region States
-    // States for recipe
+    //#region //* STATES
+    //? Recipe states
     const [name, setName] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [categories, setCategories] = useState([]);
@@ -30,19 +30,19 @@ const AddRecipe = () => {
     const [cookingTime, setCookingTime] = useState(0);
     const [numberOfServings, setNumberOfServings] = useState(0);
 
-    // States for ingredients
+    //? Ingredients states
     const [ingredients, setIngredients] = useState<Ingredient[]>([
         { ingredientId: '', quantity: '', unit: '' },
     ]);
     const [availableIngredients, setAvailableIngredients] = useState([]);
     const units = ["CUP", "GRAM", "KILOGRAM", "LITER", "CENTILITER", "MILLILITER", "PIECE"];
 
-    // States for steps
+    //? Steps states
     const [steps, setSteps] = useState<Step[]>([
         { stepNumber: 1, description: '', duration: 0 },
     ]);
 
-    // State for error messages
+    //? Error states
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [errors, setErrors] = useState<{
@@ -56,7 +56,7 @@ const AddRecipe = () => {
     }>({});
     //#endregion
 
-    //#region Fetching data
+    //#region //* DATA FETCHING
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -86,7 +86,7 @@ const AddRecipe = () => {
     }, []);
     //#endregion
 
-    //#region Ingredients
+    //#region //* INGREDIENTS
     // Fonction pour gérer le changement d'un champ spécifique d'un ingrédient
     const handleIngredientChange = (index: number, field: keyof Ingredient, value: string) => {
         const updatedIngredients = [...ingredients]; // Création d'une copie du tableau des ingrédients pour éviter de muter l'état directement        
@@ -106,7 +106,7 @@ const AddRecipe = () => {
     };
     //#endregion
 
-    //#region Steps
+    //#region //* STEPS
     // Fonction pour gérer le changement d'un champ spécifique d'une étape
     const handleStepChange = (index: number, field: keyof Step, value: string | number) => {
         const updatedSteps = [...steps];
@@ -130,7 +130,7 @@ const AddRecipe = () => {
     }
     //#endregion
 
-    //#region Schema validation
+    //#region //* SCHEMA VALIDATION
     const recipeSchema = z.object({
         name: z.string({ required_error: "Name field is missing" }).min(1, 'Recipe name is required'),
         categoryId: z.string({ required_error: "Category field is missing" }).min(1, 'Category is required'),
@@ -154,7 +154,7 @@ const AddRecipe = () => {
     });
     //#endregion
 
-    //#region Submission
+    //#region //* SUBMISSION
     // Fonction pour soumettre le formulaire
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
