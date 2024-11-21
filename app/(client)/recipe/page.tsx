@@ -1,49 +1,31 @@
-"use client";
-
 import Link from 'next/link'
-import { useEffect, useState } from 'react';
+import { fetchRecipes } from '@/utils/recipeUtils';
+import type { Recipe } from '@/lib/types/types';
 
-const Recipe = () => {
-    const [recipes, setRecipes] = useState([]);
-    const [error, setError] = useState<string | null>(null);
+export default async function Recipe() {
+    let recipes: Recipe[] | null = null;
+    let error: string | null = null;
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch('/api/recipe');
-                if (!response.ok) {
-                    setError('Failed to fetch recipes');
-                }
-
-                const data = await response.json();
-
-                setRecipes(data);
-            } catch (error) {
-                setError(error instanceof Error ? error.message : 'An error occurred');
-            }
-        }
-        fetchRecipes();
-    }, []);
-
-    if (error) {
-        throw new Error(error);
+    try {
+        recipes = await fetchRecipes();
+    } catch (e) {
+        error = e instanceof Error ? e.message : 'An error occurred';
     }
 
     return (
         <>
-            <h1>Ingredients :</h1>
+            <h1>Recipes :</h1>
             <nav>
                 <Link href='/recipe/add'>Add a recipe</Link>
             </nav>
             <div>
-                {recipes.map((recipe: { id: string, name: string }) => (
+                {recipes?.map((recipe: { id: string, name: string }) => (
                     <div key={recipe.id}>
                         <h2>{recipe.name}</h2>
                     </div>
                 ))}
             </div>
+            {error && <p>{error}</p>}
         </>
     )
 }
-
-export default Recipe

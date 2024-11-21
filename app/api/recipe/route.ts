@@ -1,18 +1,22 @@
 import { db } from '@/lib/db';
+import { ApiResponse, Recipe } from '@/lib/types/types';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
     try {
-        const recipes = await db.recipe.findMany({
+        const recipes: Recipe[] = await db.recipe.findMany({
             orderBy: {
                 name: 'asc'
             }
         });
+        if (!recipes) {
+            return NextResponse.json<ApiResponse<null>>({ message: "Recipes not found", success: false }, { status: 404 });
+        }
 
-        return NextResponse.json(recipes, { status: 200 });
+        return NextResponse.json<ApiResponse<Recipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
     } catch (error) {
         console.log("[RECIPES]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+        return NextResponse.json<ApiResponse<null>>({ message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
 }
 
@@ -63,6 +67,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(newRecipe, { status: 201 });
     } catch (error) {
         console.log("[RECIPES]", error);
-        return new NextResponse("Internal Error", { status: 500 });
+        return new NextResponse(`Internal Error: ${(error as Error).message}`, { status: 500 });
     }
 }
