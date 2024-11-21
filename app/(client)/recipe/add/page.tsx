@@ -23,12 +23,12 @@ const AddRecipe = () => {
 
     //#region //* STATES
     //? Recipe states
-    const [name, setName] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+    const [recipe, setRecipe] = useState({
+        name: '', categoryId: '', imageUrl: '', cookingTime: 0, numberOfServings: 0,
+    });
+
+    //? Categories states
     const [categories, setCategories] = useState([]);
-    const [imageUrl, setImageUrl] = useState('');
-    const [cookingTime, setCookingTime] = useState(0);
-    const [numberOfServings, setNumberOfServings] = useState(0);
 
     //? Ingredients states
     const [ingredients, setIngredients] = useState<Ingredient[]>([
@@ -84,6 +84,16 @@ const AddRecipe = () => {
         };
         fetchIngredients();
     }, []);
+    //#endregion
+
+    //#region //* RECIPE
+    // Fonction pour gérer le changement d'un champ spécifique de la recette
+    const handleRecipeChange = (key: keyof typeof recipe, value: string | number) => {
+        setRecipe((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
     //#endregion
 
     //#region //* INGREDIENTS
@@ -159,16 +169,14 @@ const AddRecipe = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Je crée un objet recipeData qui contient toutes les informations de la recette que je viens de saisir
         const recipeData = {
-            name,
-            categoryId,
-            imageUrl,
-            cookingTime,
-            numberOfServings,
+            ...recipe,
             ingredients,
             steps,
         };
 
+        // Je crée un objet newErrors qui va contenir les erreurs de validation
         const newErrors: { [key: string]: string } = {};
 
         try {
@@ -184,11 +192,13 @@ const AddRecipe = () => {
 
             if (response.ok) {
                 setMessage('Recipe added successfully');
-                setName('');
-                setCategoryId('');
-                setImageUrl('');
-                setCookingTime(0);
-                setNumberOfServings(0);
+                setRecipe({
+                    name: '',
+                    categoryId: '',
+                    imageUrl: '',
+                    cookingTime: 0,
+                    numberOfServings: 0,
+                });
                 setIngredients([{ ingredientId: '', quantity: '', unit: '' }]);
                 setSteps([{ stepNumber: 1, description: '', duration: 0 }]);
                 setErrors({});
@@ -222,8 +232,9 @@ const AddRecipe = () => {
                     labelText="Name of the recipe"
                     idName="recipeName"
                     type="text"
-                    value={name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                    value={recipe.name}
+                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                    onChange={(e) => handleRecipeChange('name', e.target.value)}
                     placeholder="Name of the recipe"
                 />
                 {errors.name && <p className="text-red-500">{errors.name}</p>}
@@ -233,8 +244,8 @@ const AddRecipe = () => {
                     <label htmlFor="category">Category</label>
                     <select
                         id="category"
-                        value={categoryId}
-                        onChange={(e) => setCategoryId(e.target.value)}
+                        value={recipe.categoryId}
+                        onChange={(e) => handleRecipeChange('categoryId', e.target.value)}
                         required
                     >
                         <option value="">Select a category</option>
@@ -253,8 +264,8 @@ const AddRecipe = () => {
                     labelText="Image URL"
                     idName="recipeImageUrl"
                     type="text"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
+                    value={recipe.imageUrl}
+                    onChange={(e) => handleRecipeChange('imageUrl', e.target.value)}
                     placeholder="Image URL"
                 />
                 {errors.imageUrl && <p className="text-red-500">{errors.imageUrl}</p>}
@@ -265,8 +276,8 @@ const AddRecipe = () => {
                     labelText="Cooking Time (minutes)"
                     idName="cookingTime"
                     type="number"
-                    value={cookingTime}
-                    onChange={(e) => setCookingTime(parseInt(e.target.value, 10))}
+                    value={recipe.cookingTime}
+                    onChange={(e) => handleRecipeChange('cookingTime', parseInt(e.target.value, 10))}
                     placeholder="Cooking Time"
                 />
                 {errors.cookingTime && <p className="text-red-500">{errors.cookingTime}</p>}
@@ -277,8 +288,8 @@ const AddRecipe = () => {
                     labelText="Number of servings"
                     idName="numberOfServings"
                     type="number"
-                    value={numberOfServings}
-                    onChange={(e) => setNumberOfServings(parseInt(e.target.value, 10))}
+                    value={recipe.numberOfServings}
+                    onChange={(e) => handleRecipeChange('numberOfServings', parseInt(e.target.value, 10))}
                     placeholder="Number of servings"
                 />
                 {errors.numberOfServings && <p className="text-red-500">{errors.numberOfServings}</p>}
