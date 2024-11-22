@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { ApiResponse, Recipe } from '@/lib/types/types';
+import { ApiResponse, IngredientRequest, Recipe, RecipeRequest, StepRequest } from '@/lib/types/types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
@@ -10,19 +10,19 @@ export async function GET(): Promise<NextResponse> {
             }
         });
         if (!recipes) {
-            return NextResponse.json<ApiResponse<null>>({ message: "Recipes not found", success: false }, { status: 404 });
+            return NextResponse.json<ApiResponse<null>>({ data: null, message: "Recipes not found", success: false }, { status: 404 });
         }
 
         return NextResponse.json<ApiResponse<Recipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
     } catch (error) {
         console.log("[RECIPES]", error);
-        return NextResponse.json<ApiResponse<null>>({ message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
+        return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
-        const { name, categoryId, imageUrl, cookingTime, numberOfServings, ingredients, steps } = await req.json();
+        const { name, categoryId, imageUrl, cookingTime, numberOfServings, ingredients, steps } = await req.json() as RecipeRequest;
 
         const requiredFields = [
             { field: name, message: "Name is required" },
@@ -36,11 +36,11 @@ export async function POST(req: NextRequest) {
 
         for (const { field, message } of requiredFields) {
             if (!field) {
-                return new NextResponse(message, { status: 400 });
+                return NextResponse.json<ApiResponse<null>>({ data: null, message, success: false }, { status: 400 });
             }
         };
 
-        const newRecipe = await db.recipe.create({
+        const newRecipe: Recipe = await db.recipe.create({
             data: {
                 name,
                 categoryId,
@@ -48,14 +48,18 @@ export async function POST(req: NextRequest) {
                 cookingTime,
                 numberOfServings,
                 ingredients: {
-                    create: ingredients.map((ingredient: { ingredientId: string; quantity: string; unit: string }) => ({
-                        ingredientId: ingredient.ingredientId,
+                    create: ingredients.map((ingredient: IngredientRequest) => ({
+                        ingredient: {
+                            connect: {
+                                id: ingredient.ingredientId
+                            }
+                        },
                         quantity: parseFloat(ingredient.quantity),
                         unit: ingredient.unit
                     })),
                 },
                 steps: {
-                    create: steps.map((step: { description: string; duration: number }, index: number) => ({
+                    create: steps.map((step: StepRequest, index: number) => ({
                         stepNumber: index + 1,
                         description: step.description,
                         duration: step.duration,
@@ -64,9 +68,9 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        return NextResponse.json(newRecipe, { status: 201 });
+        return NextResponse.json<ApiResponse<Recipe>>({ data: newRecipe, message: "Recipe created", success: true }, { status: 201 });
     } catch (error) {
         console.log("[RECIPES]", error);
-        return new NextResponse(`Internal Error: ${(error as Error).message}`, { status: 500 });
+        return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
 }
