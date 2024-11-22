@@ -6,6 +6,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(): Promise<NextResponse> {
     try {
         const recipes: Recipe[] = await db.recipe.findMany({
+            include: {
+                category: true,
+            },
             orderBy: {
                 name: 'asc'
             }

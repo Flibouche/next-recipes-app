@@ -14,7 +14,17 @@ export interface ErrorDisplayProps {
 export interface Recipe {
     id: string;
     name: string;
+    category?: {
+        id: string;
+        name: string;
+    }
     imageUrl: string | null;
+    numberOfServings: number;
+    cookingTime: number;
+}
+
+export interface RecipeList {
+    recipes: Recipe[];
 }
 
 export interface RecipeRequest {
