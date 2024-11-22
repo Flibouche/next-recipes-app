@@ -13,8 +13,11 @@ const config: Config = {
         },
         extend: {
             colors: {
-                background: "var(--background)",
-                foreground: "var(--foreground)",
+                text: 'var(--text-color)',
+                background: 'var(--background)',
+                primary: 'var(--primary-color)',
+                secondary: 'var(--secondary-color)',
+                accent: 'var(--accent-color)',
             },
         },
     },

@@ -5,16 +5,21 @@ import { IoMdPerson, IoIosTimer } from 'react-icons/io';
 
 const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTime }: Recipe) => {
     return (
-        <div key={id}>
+        <div
+            key={id}
+            className='cursor-pointer group'
+        >
             {imageUrl ? (
                 <div className="relative">
-                    <Image
-                        src={imageUrl}
-                        alt={name}
-                        width={500}
-                        height={500}
-                        className="rounded-lg"
-                    />
+                    <div className='overflow-hidden'>
+                        <Image
+                            src={imageUrl}
+                            alt={name}
+                            width={500}
+                            height={500}
+                            className="w-full h-auto object-cover group-hover:scale-110 transform transition duration-300 ease-out border-[2px] border-red-500"
+                        />
+                    </div>
                     <div className="flex justify-center">
                         <h2 className="absolute bottom-0 py-2 px-5 bg-white text-center text-blue-500 font-bold text-sm uppercase">
                             {category?.name}

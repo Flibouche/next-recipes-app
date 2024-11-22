@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "next-themes";
 
 // Components
 import Header from "@/components/Header";
@@ -14,21 +15,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
     return (
         <ClerkProvider>
-            <html lang="en">
+            <html lang="en" suppressHydrationWarning>
                 <body>
-                    <Header />
-                    <div>
-                        <SignedOut>
-                            <SignInButton />
-                        </SignedOut>
-                        <SignedIn>
-                            <UserButton />
-                        </SignedIn>
-                    </div>
-                    <main className="container">
-                        {children}
-                    </main>
-                    <Footer />
+                    <ThemeProvider attribute="class" defaultTheme={"system"} enableSystem>
+                        <Header />
+                        <main>
+                            {children}
+                        </main>
+                        <Footer />
+                    </ThemeProvider>
                 </body>
             </html>
         </ClerkProvider>

@@ -23,7 +23,7 @@ export interface Recipe {
     cookingTime: number;
 }
 
-export interface RecipeList {
+export interface RecipesList {
     recipes: Recipe[];
 }
 
