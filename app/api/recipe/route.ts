@@ -1,5 +1,6 @@
 import { db } from '@/lib/db';
 import { ApiResponse, IngredientRequest, Recipe, RecipeRequest, StepRequest } from '@/lib/types/types';
+import { checkIsExisting } from '@/lib/validators/db-validators';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
@@ -22,7 +23,7 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
-        const { name, categoryId, imageUrl, cookingTime, numberOfServings, ingredients, steps } = await req.json() as RecipeRequest;
+        const { name, categoryId, imageUrl, cookingTime, numberOfServings, ingredients, steps }: RecipeRequest = await req.json();
 
         const requiredFields = [
             { field: name, message: "Name is required" },
@@ -40,9 +41,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             }
         };
 
+        const isExisting: boolean = await checkIsExisting('recipe', name);
+        if (isExisting) {
+            return NextResponse.json<ApiResponse<null>>({ data: null, message: "A recipe with this name already exists", success: false }, { status: 409 })
+        }
+
         const newRecipe: Recipe = await db.recipe.create({
             data: {
-                name,
+                name: name.trim(),
                 categoryId,
                 imageUrl,
                 cookingTime,

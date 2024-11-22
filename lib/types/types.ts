@@ -38,3 +38,12 @@ export interface StepRequest {
     description: string;
     duration: number;
 }
+
+export interface Ingredient {
+    id: string;
+    name: string;
+}
+
+export interface IngredientRequest {
+    name: string;
+}
