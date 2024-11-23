@@ -57,3 +57,12 @@ export interface Ingredient {
 export interface IngredientRequest {
     name: string;
 }
+
+export interface Category {
+    id: string;
+    name: string;
+}
+
+export interface CategoryRequest {
+    name: string;
+}
