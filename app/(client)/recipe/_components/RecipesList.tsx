@@ -3,8 +3,8 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, A11y, Autoplay } from 'swiper/modules';
-import RecipeCard from './RecipeCard';
 import type { RecipesList } from '@/lib/types/types';
+import RecipeCard from './RecipeCard';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
