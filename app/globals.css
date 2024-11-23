@@ -68,6 +68,13 @@
   --accent-900: hsl(99, 45%, 10%);
   --accent-950: hsl(100, 46%, 5%);
 
+  --linearPrimarySecondary: linear-gradient(hsl(16, 60%, 51%), hsl(78, 45%, 75%));
+  --linearPrimaryAccent: linear-gradient(hsl(16, 60%, 51%), hsl(98, 46%, 61%));
+  --linearSecondaryAccent: linear-gradient(hsl(78, 45%, 75%), hsl(98, 46%, 61%));
+  --radialPrimarySecondary: radial-gradient(hsl(16, 60%, 51%), hsl(78, 45%, 75%));
+  --radialPrimaryAccent: radial-gradient(hsl(16, 60%, 51%), hsl(98, 46%, 61%));
+  --radialSecondaryAccent: radial-gradient(hsl(78, 45%, 75%), hsl(98, 46%, 61%));
+
   --swiper-navigation-size: 20px !important;
 }
 
@@ -136,27 +143,36 @@
   --accent-800: hsl(98, 45%, 80%);
   --accent-900: hsl(99, 45%, 90%);
   --accent-950: hsl(95, 46%, 95%);
+
+  --linearPrimarySecondary: linear-gradient(hsl(16, 60%, 49%), hsl(78, 45%, 25%));
+  --linearPrimaryAccent: linear-gradient(hsl(16, 60%, 49%), hsl(98, 46%, 39%));
+  --linearSecondaryAccent: linear-gradient(hsl(78, 45%, 25%), hsl(98, 46%, 39%));
+  --radialPrimarySecondary: radial-gradient(hsl(16, 60%, 49%), hsl(78, 45%, 25%));
+  --radialPrimaryAccent: radial-gradient(hsl(16, 60%, 49%), hsl(98, 46%, 39%));
+  --radialSecondaryAccent: radial-gradient(hsl(78, 45%, 25%), hsl(98, 46%, 39%));
+
 }
 
 body {
   color: var(--text);
-  background: var(--background);
+  background: var(--background-50);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.swiper-button-prev,
+/* .swiper-button-prev,
 .swiper-button-next {
   background-color: red;
   padding: 30px;
   border-radius: 50%;
   color: white;
-}
+} */
 
+/* 
 .swiper-button-prev,
 .swiper-button-next {
   &::after {
-    /* color: pink; */
+    color: pink;
     size: 2px;
     content: none;
   }
-}
+} */

@@ -5,7 +5,7 @@ import Nav from "./Nav"
 
 const Header = () => {
     return (
-        <header className="w-full py-3 border-primary border-b-[1px]">
+        <header className="w-full py-3">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <Link href='/'>
