@@ -82,7 +82,7 @@ export default function Home() {
     return (
         <div>
             {/* Hero */}
-            <section className="relative h-[100vh] py-20">
+            <section className="relative h-[100vh] py-20 bg-primary-50">
                 {/* Background image */}
                 <div className="container flex flex-row items-center gap-[3%]">
                     <div className="w-[50%] flex justify-center">
@@ -143,7 +143,7 @@ export default function Home() {
                 </Swiper>
             </section>
 
-            <section className="h-[65vh] bg-secondary-100">
+            <section className="h-[65vh] bg-accent-100">
                 <div className="container h-full flex flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
                     <p className="text-3xl text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
