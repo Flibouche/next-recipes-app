@@ -16,13 +16,13 @@ const Nav = () => {
     const pathname: string = usePathname();
 
     return (
-        <nav className="flex gap-8" aria-label='Desktop navigation'>
+        <nav className="flex items-center gap-8" aria-label='Desktop navigation'>
             {links.map((link, index) => (
                 <Link
                     href={link.path}
                     key={index}
-                    className={`${link.path === pathname && "text-blue-500 border-b-2 border-accent"
-                        } capitalize `}
+                    className={`${link.path === pathname && "text-primary border-primary-200 border-b-[1px] hover:text-primary"
+                        } text-sm font-bold uppercase hover:text-primary-300 ease-in-out duration-300 `}
                 >
                     {link.name}
                 </Link>

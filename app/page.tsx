@@ -11,31 +11,28 @@ export default function Home() {
 
     return (
         <div>
-            <section className="relative h-[500px] bg-cover bg-center text-white py-20">
+            {/* Hero */}
+            <section className="relative h-[100vh] py-20">
                 {/* Background image */}
-                <div className="absolute inset-0 -z-10">
-                    <Image
-                        src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732313991/background.jpg"
-                        alt="Background"
-                        layout="fill"
-                        objectFit="cover"
-                        objectPosition="center"
-                    />
-                </div>
-
-                <div className="mx-auto px-4 text-center">
-                    <h1 className="text-5xl font-bold uppercase">Your Next.js recipes</h1>
-                    <p className="mt-4 text-lg">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </p>
-                    <a
-                        href="#menu"
-                        className="mt-6 inline-block px-6 py-3 bg-yellow-500 text-white font-semibold rounded hover:bg-yellow-600"
-                    >
-                        See Our Menu
-                    </a>
+                <div className="container flex flex-row items-center gap-[3%]">
+                    <div className="w-[50%] flex justify-center">
+                        <Image
+                            src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732360066/next-recipe-hero.jpg"
+                            alt="Hero"
+                            width={450}
+                            height={450}
+                        />
+                    </div>
+                    <div className="w-[50%] space-y-4">
+                        <h1 className="text-7xl text-primary font-bold uppercase">Your <br /> <span className="text-8xl">Next.js</span><br />cooking recipe</h1>
+                        <h2 className="text-xl">Discover Recipes Crafted by Food Lovers, for Food Lovers</h2>
+                        <p>Unleash your inner chef with dishes designed to inspire, created with passion, and perfect for every skill level. Join our community and turn everyday meals into extraordinary moments.</p>
+                        <button className="bg-primary py-3 px-7 rounded-3xl text-text-50 font-bold">Discover all recipes</button>
+                    </div>
                 </div>
             </section>
+
+            <section className="h-[45vh] bg-secondary-100"></section>
 
             <section className="mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

@@ -5,11 +5,11 @@ import Nav from "./Nav"
 
 const Header = () => {
     return (
-        <header className="w-full py-6 text-white bg-secondary">
+        <header className="w-full py-3 border-primary border-b-[1px]">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Logo */}
                 <Link href='/'>
-                    <h1 className="text-2xl font-semibold">Reeecipes</h1>
+                    <h1 className="text-2xl text-primary font-semibold">Reeecipes</h1>
                 </Link>
 
                 {/* Desktop nav */}
