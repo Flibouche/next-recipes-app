@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { fetchRecipes } from '@/utils/recipeUtils';
 import type { Recipe } from '@/lib/types/types';
-import RecipesList from '@/components/RecipesList';
+import RecipesList from './_components/RecipesList';
 
 export default async function Recipe() {
     let recipes: Recipe[] | null = null;
