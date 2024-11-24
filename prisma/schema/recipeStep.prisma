@@ -3,7 +3,7 @@ model RecipeStep {
     recipeId    String @db.ObjectId
     stepNumber  Int
     description String
-    duration    Int?
+    duration    Int
     recipe      Recipe @relation(fields: [recipeId], references: [id])
 
     @@index([recipeId])
