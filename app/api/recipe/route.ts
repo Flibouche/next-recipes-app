@@ -3,23 +3,55 @@ import { ApiResponse, Recipe, RecipeIngredient, RecipeStep } from '@/lib/types/t
 import { checkIsExisting } from '@/lib/validators/db-validators';
 import { NextRequest, NextResponse } from 'next/server';
 
-type GetRecipe = Omit<Recipe, "ingredients" | "steps">;
+type GetUndetailedRecipe = Omit<Recipe, "ingredients" | "steps">;
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(req: Request): Promise<NextResponse> {
     try {
-        const recipes: GetRecipe[] = await db.recipe.findMany({
-            include: {
-                category: true,
-            },
-            orderBy: {
-                name: 'asc'
-            }
-        });
+        const url = new URL(req.url);
+        const type = url.searchParams.get('type');
+        const id = url.searchParams.get('id') || undefined;
+
+        let recipes: Recipe[] | GetUndetailedRecipe[];
+
+        switch (type) {
+            case "detailed":
+                const recipe = await db.recipe.findUnique({
+                    where: { id: id },
+                    include: {
+                        category: true,
+                    },
+                }) as Recipe;
+
+                if (!recipe) {
+                    recipes = [];
+                } else {
+                    recipes = [recipe];
+                }
+
+                break;
+
+            default:
+                recipes = await db.recipe.findMany({
+                    select: {
+                        id: true,
+                        name: true,
+                        category: true,
+                        imageUrl: true,
+                        cookingTime: true,
+                        numberOfServings: true,
+                    },
+                    orderBy: {
+                        name: 'asc'
+                    }
+                }) as GetUndetailedRecipe[];
+                break;
+        }
+
         if (!recipes) {
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Recipes not found", success: false }, { status: 404 });
         }
 
-        return NextResponse.json<ApiResponse<GetRecipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
+        return NextResponse.json<ApiResponse<Recipe[] | GetUndetailedRecipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
     } catch (error) {
         console.log("[RECIPES]", error);
         return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
