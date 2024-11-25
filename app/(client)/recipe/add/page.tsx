@@ -5,22 +5,10 @@ import { z } from 'zod';
 
 // Components
 import FormInput from '@/components/FormInput';
+import { RecipeIngredient, RecipeStep } from '@/lib/types/types';
+import { IngredientUnit } from '@/lib/enums/enums';
 
 const AddRecipe = () => {
-    //#region //* INTERFACES / TYPES
-    interface Ingredient {
-        ingredientId: string;
-        quantity: string;
-        unit: string;
-    }
-
-    interface Step {
-        stepNumber: number;
-        description: string;
-        duration: number;
-    }
-    //#endregion
-
     //#region //* STATES
     //? Recipe states
     const [recipe, setRecipe] = useState({
@@ -28,17 +16,17 @@ const AddRecipe = () => {
     });
 
     //? Categories states
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
     //? Ingredients states
-    const [ingredients, setIngredients] = useState<Ingredient[]>([
-        { ingredientId: '', quantity: '', unit: '' },
+    const [ingredients, setIngredients] = useState<RecipeIngredient[]>([
+        { ingredientId: '', quantity: '', unit: IngredientUnit.GRAM },
     ]);
-    const [availableIngredients, setAvailableIngredients] = useState([]);
-    const units = ["CUP", "GRAM", "KILOGRAM", "LITER", "CENTILITER", "MILLILITER", "PIECE"];
+    const [availableIngredients, setAvailableIngredients] = useState<{ id: string; name: string, imageUrl: string }[]>([]);
+    const units = Object.values(IngredientUnit);
 
     //? Steps states
-    const [steps, setSteps] = useState<Step[]>([
+    const [steps, setSteps] = useState<RecipeStep[]>([
         { stepNumber: 1, description: '', duration: 0 },
     ]);
 
@@ -61,8 +49,11 @@ const AddRecipe = () => {
         const fetchCategories = async () => {
             try {
                 const response = await fetch('/api/category');
-                if (!response.ok) throw new Error('Failed to fetch categories');
-                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to fetch categories');
+                }
+
+                const { data } = await response.json();
                 setCategories(data);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'An error occurred');
@@ -75,11 +66,14 @@ const AddRecipe = () => {
         const fetchIngredients = async () => {
             try {
                 const response = await fetch('/api/ingredient');
-                if (!response.ok) throw new Error('Failed to fetch ingredients');
-                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error('Failed to fetch ingredients');
+                }
+
+                const { data } = await response.json();
                 setAvailableIngredients(data);
-            } catch (error) {
-                setError(error instanceof Error ? error.message : 'An error occurred');
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An error occurred');
             }
         };
         fetchIngredients();
@@ -98,7 +92,7 @@ const AddRecipe = () => {
 
     //#region //* INGREDIENTS
     // Fonction pour gérer le changement d'un champ spécifique d'un ingrédient
-    const handleIngredientChange = (index: number, field: keyof Ingredient, value: string) => {
+    const handleIngredientChange = (index: number, field: keyof RecipeIngredient, value: IngredientUnit) => {
         const updatedIngredients = [...ingredients]; // Création d'une copie du tableau des ingrédients pour éviter de muter l'état directement        
         updatedIngredients[index][field] = value; // Mise à jour du champ spécifié de l'ingrédient à l'index donné
         setIngredients(updatedIngredients);// Mise à jour de l'état avec le tableau des ingrédients modifié
@@ -106,7 +100,7 @@ const AddRecipe = () => {
 
     // Fonction pour ajouter un nouvel ingrédient vide à la liste
     const addIngredient = () => {
-        setIngredients([...ingredients, { ingredientId: '', quantity: '', unit: '' }]); // Ajout d'un nouvel ingrédient vide avec des valeurs par défaut pour chaque champ
+        setIngredients([...ingredients, { ingredientId: '', quantity: '', unit: IngredientUnit.GRAM }]); // Ajout d'un nouvel ingrédient vide avec des valeurs par défaut pour chaque champ
     };
 
     // Fonction pour supprimer un ingrédient de la liste en fonction de son index
@@ -118,7 +112,7 @@ const AddRecipe = () => {
 
     //#region //* STEPS
     // Fonction pour gérer le changement d'un champ spécifique d'une étape
-    const handleStepChange = (index: number, field: keyof Step, value: string | number) => {
+    const handleStepChange = (index: number, field: keyof RecipeStep, value: string | number) => {
         const updatedSteps = [...steps];
         if (field === 'description') {
             updatedSteps[index].description = value as string;
@@ -199,7 +193,7 @@ const AddRecipe = () => {
                     cookingTime: 0,
                     numberOfServings: 0,
                 });
-                setIngredients([{ ingredientId: '', quantity: '', unit: '' }]);
+                setIngredients([{ ingredientId: '', quantity: '', unit: IngredientUnit.GRAM }]);
                 setSteps([{ stepNumber: 1, description: '', duration: 0 }]);
                 setErrors({});
             } else {
@@ -301,7 +295,7 @@ const AddRecipe = () => {
                         <div key={index} className="flex items-center space-x-2">
                             <select
                                 value={ingredient.ingredientId}
-                                onChange={(e) => handleIngredientChange(index, 'ingredientId', e.target.value)}
+                                onChange={(e) => handleIngredientChange(index, 'ingredientId', e.target.value as IngredientUnit)}
                                 required
                                 className="border p-1"
                             >
@@ -316,7 +310,7 @@ const AddRecipe = () => {
                             <input
                                 type="number"
                                 value={ingredient.quantity}
-                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                                onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value as IngredientUnit)}
                                 placeholder="Quantity"
                                 required
                                 className="border p-1"
@@ -324,7 +318,7 @@ const AddRecipe = () => {
 
                             <select
                                 value={ingredient.unit}
-                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value as IngredientUnit)}
                                 required
                                 className="border p-1"
                             >

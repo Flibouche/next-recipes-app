@@ -39,6 +39,7 @@ export interface RecipeIngredient {
 }
 
 export interface RecipeStep {
+    stepNumber: number;
     description: string;
     duration: number;
 }
