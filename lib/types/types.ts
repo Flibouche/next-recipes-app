@@ -14,37 +14,31 @@ export interface ErrorDisplayProps {
 export interface Recipe {
     id: string;
     name: string;
-    category?: {
-        id: string;
-        name: string;
-    }
+    category: { id: string, name: string };
+    categoryId: string;
     imageUrl: string | null;
-    numberOfServings: number;
     cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    ingredients: RecipeIngredient[];
+    steps: RecipeStep[];
 }
 
 export interface RecipesList {
     recipes: Recipe[];
 }
 
-export interface RecipeRequest {
-    id: string;
-    categoryId: string;
-    name: string;
-    imageUrl: string | null;
-    cookingTime: number;
-    numberOfServings: number;
-    ingredients: IngredientRequest[];
-    steps: StepRequest[];
-}
-
-export interface IngredientRequest {
+export interface RecipeIngredient {
     ingredientId: string;
     quantity: string;
     unit: IngredientUnit;
 }
 
-export interface StepRequest {
+export interface RecipeStep {
     description: string;
     duration: number;
 }
