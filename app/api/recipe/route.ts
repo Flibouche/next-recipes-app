@@ -106,7 +106,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                                 id: ingredient.ingredientId
                             }
                         },
-                        quantity: parseFloat(ingredient.quantity),
+                        quantity: ingredient.quantity,
                         unit: ingredient.unit
                     })),
                 },
