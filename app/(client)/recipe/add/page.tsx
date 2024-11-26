@@ -141,7 +141,7 @@ const AddRecipe = () => {
             z.object({
                 ingredientId: z.string({ required_error: "Ingredient field is missing" }).min(1, 'Ingredient is required'),
                 quantity: z.number({ required_error: "Quantity field is missing" }).min(1, 'Quantity must be greater than 0'),
-                unit: z.string({ required_error: "Unit field is missing" }).min(1, 'Unit is required'),
+                unit: z.nativeEnum(IngredientUnit, { required_error: "Unit field is missing", invalid_type_error: "Invalid unit selected" }),
             })
         ).min(1, 'At least one ingredient is required'),
         steps: z.array(
