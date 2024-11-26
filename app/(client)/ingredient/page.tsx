@@ -1,5 +1,5 @@
 import type { Ingredient } from "@/lib/types/types";
-import { fetchIngredients } from "@/utils/ingredientUtils";
+import { fetchIngredients } from "@/lib/services/ingredientService";
 import Link from "next/link";
 
 export default async function Ingredient() {

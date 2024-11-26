@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { fetchRecipes } from '@/utils/recipeUtils';
+import { fetchRecipes } from '@/lib/services/recipeService';
 import type { Recipe } from '@/lib/types/types';
 import RecipesList from './_components/RecipesList';
 

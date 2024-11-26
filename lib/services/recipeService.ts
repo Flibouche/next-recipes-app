@@ -12,7 +12,6 @@ export async function fetchRecipes(): Promise<Recipe[]> {
         if (!data.success) {
             throw new Error(data.message);
         }
-        console.log(data);
 
         return data.data ?? [];
     } catch (error) {
@@ -20,19 +19,19 @@ export async function fetchRecipes(): Promise<Recipe[]> {
     }
 }
 
-export async function fetchDetailedRecipe(recipeId: string): Promise<Recipe[]> {
+export async function fetchDetailedRecipe(recipeId: string): Promise<Recipe> {
     try {
 
         if (recipeId === undefined) {
             throw new Error('Recipe ID is required');
         }
 
-        const response: Response = await fetch(`http://localhost:3000/api/recipe?type=detailed&id=${recipeId}`, { method: 'GET', next: { revalidate: 10 } });
+        const response: Response = await fetch(`http://localhost:3000/api/recipe/${recipeId}?id=${recipeId}`, { method: 'GET', next: { revalidate: 10 } });
         if (!response.ok) {
             throw new Error('Failed to fetch recipe');
         }
 
-        const data: ApiResponse<Recipe[]> = await response.json();
+        const data: ApiResponse<Recipe> = await response.json();
         if (!data.success) {
             throw new Error(data.message);
         }
