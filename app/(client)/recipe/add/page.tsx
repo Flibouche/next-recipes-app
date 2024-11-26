@@ -112,13 +112,9 @@ const AddRecipe = () => {
 
     //#region //* STEPS
     // Fonction pour gérer le changement d'un champ spécifique d'une étape
-    const handleStepChange = (index: number, field: keyof RecipeStep, value: string | number) => {
+    const handleStepChange = <T extends keyof RecipeStep>(index: number, field: T, value: RecipeStep[T]) => {
         const updatedSteps = [...steps];
-        if (field === 'description') {
-            updatedSteps[index].description = value as string;
-        } else {
-            updatedSteps[index].duration = typeof value === 'string' ? parseInt(value, 10) : value;
-        }
+        updatedSteps[index][field] = value;
         setSteps(updatedSteps);
     };
 
