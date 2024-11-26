@@ -12,7 +12,7 @@ const AddRecipe = () => {
     //#region //* STATES
     //? Recipe states
     const [recipe, setRecipe] = useState({
-        name: '', categoryId: '', imageUrl: '', cookingTime: 0, numberOfServings: 0,
+        name: '', categoryId: '', imageUrl: '', cookingTime: 0, numberOfServings: 0, difficulty: 0, vegan: false, healthy: false
     });
 
     //? Categories states
@@ -82,7 +82,7 @@ const AddRecipe = () => {
 
     //#region //* RECIPE
     // Fonction pour gérer le changement d'un champ spécifique de la recette
-    const handleRecipeChange = (key: keyof typeof recipe, value: string | number) => {
+    const handleRecipeChange = (key: keyof typeof recipe, value: string | number | boolean) => {
         setRecipe((prev) => ({
             ...prev,
             [key]: value,
@@ -188,6 +188,9 @@ const AddRecipe = () => {
                     imageUrl: '',
                     cookingTime: 0,
                     numberOfServings: 0,
+                    difficulty: 0,
+                    vegan: false,
+                    healthy: false,
                 });
                 setIngredients([{ ingredientId: '', quantity: 0, unit: IngredientUnit.GRAM }]);
                 setSteps([{ stepNumber: 1, description: '', duration: 0 }]);
@@ -283,6 +286,44 @@ const AddRecipe = () => {
                     placeholder="Number of servings"
                 />
                 {errors.numberOfServings && <p className="text-red-500">{errors.numberOfServings}</p>}
+
+                {/* Difficulty */}
+                <div className="flex flex-col">
+                    <label htmlFor="difficulty">Difficulty</label>
+                    <select
+                        id="difficulty"
+                        value={recipe.difficulty}
+                        onChange={(e) => handleRecipeChange('difficulty', parseInt(e.target.value, 10))}
+                        required
+                    >
+                        <option value="">Select a difficulty</option>
+                        <option value="1">Easy</option>
+                        <option value="2">Medium</option>
+                        <option value="3">Hard</option>
+                    </select>
+                </div>
+
+                {/* Vegan */}
+                <div className="flex items-center">
+                    <input
+                        type="checkbox"
+                        id="vegan"
+                        checked={recipe.vegan}
+                        onChange={(e) => handleRecipeChange('vegan', e.target.checked)}
+                    />
+                    <label htmlFor="vegan">Vegan</label>
+                </div>
+
+                {/* Healthy */}
+                <div className="flex items-center">
+                    <input
+                        type="checkbox"
+                        id="healthy"
+                        checked={recipe.healthy}
+                        onChange={(e) => handleRecipeChange('healthy', e.target.checked)}
+                    />
+                    <label htmlFor="healthy">Healthy</label>
+                </div>
 
                 {/* Ingredients */}
                 <div className="space-y-4">

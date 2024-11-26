@@ -49,8 +49,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             { field: cookingTime, message: "Cooking time is required" },
             { field: numberOfServings, message: "Number of servings is required" },
             { field: difficulty, message: "Difficulty is required" },
-            { field: vegan, message: "Vegan is required" },
-            { field: healthy, message: "Healthy is required" },
             { field: ingredients, message: "Ingredients are required" },
             { field: steps, message: "Steps are required" }
         ];
