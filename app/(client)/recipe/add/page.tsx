@@ -140,7 +140,7 @@ const AddRecipe = () => {
         ingredients: z.array(
             z.object({
                 ingredientId: z.string({ required_error: "Ingredient field is missing" }).min(1, 'Ingredient is required'),
-                quantity: z.string({ required_error: "Quantity field is missing" }).min(1, 'Quantity must be greater than 0'),
+                quantity: z.number({ required_error: "Quantity field is missing" }).min(1, 'Quantity must be greater than 0'),
                 unit: z.string({ required_error: "Unit field is missing" }).min(1, 'Unit is required'),
             })
         ).min(1, 'At least one ingredient is required'),
@@ -306,7 +306,7 @@ const AddRecipe = () => {
                             <input
                                 type="number"
                                 value={ingredient.quantity}
-                                onChange={(e) => handleIngredientChange(index, 'quantity', parseFloat(e.target.value))}
+                                onChange={(e) => handleIngredientChange(index, 'quantity', parseFloat(e.target.value as IngredientUnit))}
                                 placeholder="Quantity"
                                 required
                                 className="border p-1"
