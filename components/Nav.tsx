@@ -21,8 +21,8 @@ const Nav = () => {
                 <Link
                     href={link.path}
                     key={index}
-                    className={`${link.path === pathname && "text-primary border-primary-200 border-b-[1px] hover:text-primary"
-                        } text-sm font-bold uppercase hover:text-primary-300 ease-in-out duration-300 `}
+                    className={`${link.path === pathname && "border-b border-primary-200 text-primary hover:text-primary"
+                        } text-sm font-bold uppercase duration-300 ease-in-out hover:text-primary-300 `}
                 >
                     {link.name}
                 </Link>

@@ -216,8 +216,8 @@ const AddRecipe = () => {
     //#endregion
 
     return (
-        <div className="p-4 bg-red-200 text-black">
-            <h1 className="text-lg font-bold mb-4">Add a recipe</h1>
+        <div className="bg-red-200 p-4 text-black">
+            <h1 className="mb-4 text-lg font-bold">Add a recipe</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name */}
                 <FormInput
@@ -327,7 +327,7 @@ const AddRecipe = () => {
 
                 {/* Ingredients */}
                 <div className="space-y-4">
-                    <h2 className="text-md font-semibold">Ingredients</h2>
+                    <h2 className="font-semibold">Ingredients</h2>
                     {ingredients.map((ingredient, index) => (
                         <div key={index} className="flex items-center space-x-2">
                             <select
@@ -370,14 +370,14 @@ const AddRecipe = () => {
                             <button
                                 type="button"
                                 onClick={() => removeIngredient(index)}
-                                className="bg-red-500 text-white px-2 py-1 rounded"
+                                className="rounded bg-red-500 px-2 py-1 text-white"
                             >
                                 X
                             </button>
 
                         </div>
                     ))}
-                    <button type="button" onClick={addIngredient} className="bg-blue-500 text-white px-2 py-1 rounded">
+                    <button type="button" onClick={addIngredient} className="rounded bg-blue-500 px-2 py-1 text-white">
                         Add Ingredient
                     </button>
                 </div>
@@ -410,14 +410,14 @@ const AddRecipe = () => {
                             <button
                                 type="button"
                                 onClick={() => removeStep(index)}
-                                className="bg-red-500 text-white px-2 py-1 rounded"
+                                className="rounded bg-red-500 px-2 py-1 text-white"
                             >
                                 X
                             </button>
                         </div>
                     ))}
 
-                    <button type="button" onClick={addStep} className='bg-blue-500 text-white px-2 py-1 rounded'>
+                    <button type="button" onClick={addStep} className='rounded bg-blue-500 px-2 py-1 text-white'>
                         Add step
                     </button>
                 </div>
@@ -425,13 +425,13 @@ const AddRecipe = () => {
 
                 {/* Submit button */}
 
-                <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+                <button type="submit" className="rounded bg-green-500 px-4 py-2 text-white">
                     Add Recipe
                 </button>
             </form>
 
             {message && <p className="mt-4">{message}</p>}
-            {error && <p className="text-red-500 mt-4">{error}</p>}
+            {error && <p className="mt-4 text-red-500">{error}</p>}
         </div>
     );
 };

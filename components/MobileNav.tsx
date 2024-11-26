@@ -23,7 +23,7 @@ const MobileNav = () => {
     return (
         <nav aria-label='Mobile Navigation'>
             <button
-                className='flex justify-center items-center'
+                className='flex items-center justify-center'
                 onClick={handleMenuToggle}
                 aria-expanded={isOpen}
                 aria-controls='mobile-menu'
@@ -34,19 +34,19 @@ const MobileNav = () => {
 
             <div
                 id='mobile-menu'
-                className={`fixed top-0 right-0 w-full h-full bg-red-500 z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`fixed right-0 top-0 z-50 size-full bg-red-500 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
                 role='dialog'
                 aria-hidden={!isOpen}
             >
                 <button
-                    className="absolute top-4 right-4 text-2xl"
+                    className="absolute right-4 top-4 text-2xl"
                     onClick={handleMenuToggle}
                     aria-label='Close Mobile Menu'
                 >
                     &times;
                 </button>
                 <nav
-                    className="flex flex-col items-center mt-16 space-y-4"
+                    className="mt-16 flex flex-col items-center space-y-4"
                     aria-label='Mobile Navigation Links'
                 >
                     {links.map((link, index) => {
@@ -55,7 +55,7 @@ const MobileNav = () => {
                                 href={link.path}
                                 key={index}
                                 onClick={handleLinkClick}
-                                className={`${link.path === pathname && "text-blue-500 border-b-2 border-accent"} capitalize `}
+                                className={`${link.path === pathname && "border-b-2 border-accent text-blue-500"} capitalize `}
                             >
                                 {link.name}
                             </Link>

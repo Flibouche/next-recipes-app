@@ -19,11 +19,11 @@ const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTim
                                 alt={name}
                                 width={500}
                                 height={500}
-                                className="w-full h-auto object-cover group-hover:scale-110 transform transition duration-300 ease-out border-[2px] border-red-500"
+                                className="h-auto w-full border-2 border-red-500 object-cover transition duration-300 ease-out group-hover:scale-110"
                             />
                         </div>
                         <div className="flex justify-center">
-                            <h2 className="absolute bottom-0 py-2 px-5 bg-white text-center text-blue-500 font-bold text-sm uppercase">
+                            <h2 className="absolute bottom-0 bg-white px-5 py-2 text-center text-sm font-bold uppercase text-blue-500">
                                 {category?.name}
                             </h2>
                         </div>
@@ -31,10 +31,10 @@ const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTim
                 ) : (
                     <p>No image available</p>
                 )}
-                <div className="flex justify-center capitalize mt-2">
-                    <h2 className="font-bold text-lg">{name}</h2>
+                <div className="mt-2 flex justify-center capitalize">
+                    <h2 className="text-lg font-bold">{name}</h2>
                 </div>
-                <div className="flex justify-center gap-4 mt-2">
+                <div className="mt-2 flex justify-center gap-4">
                     <div className="flex flex-row items-center gap-2">
                         <IoMdPerson />
                         <p>{numberOfServings} servings</p>

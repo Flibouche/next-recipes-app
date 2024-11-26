@@ -23,8 +23,8 @@ const Header = () => {
     }, []);
 
     return (
-        <header className="w-full py-4 bg-primary-50">
-            <div className="container mx-auto flex justify-between items-center">
+        <header className="w-full bg-primary-50 py-4">
+            <div className="container mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <Link href='/'>
                     {theme === "dark" ? (
@@ -41,13 +41,13 @@ const Header = () => {
                             alt="Logo"
                             width={200}
                             height={150}
-                            className="fill-curent text-red-500"
+                            className="fill-current text-red-500"
                         />
                     )}
                 </Link>
 
                 {/* Desktop nav */}
-                <div className="hidden xl:flex items-center gap-8">
+                <div className="hidden items-center gap-8 xl:flex">
                     <Nav />
                 </div>
 
