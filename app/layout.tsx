@@ -27,7 +27,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
                 <body>
                     <ThemeProvider attribute="class" defaultTheme={"system"} enableSystem>
                         <Header />
-                        <main>
+                        <main className="min-h-screen bg-primary-50">
                             {children}
                         </main>
                         <Footer />

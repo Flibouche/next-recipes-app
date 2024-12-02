@@ -19,7 +19,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { IoChevronDownCircleOutline, IoHome, IoFastFood } from 'react-icons/io5';
 import { PiArticleNyTimesFill } from "react-icons/pi";
 import { CiLogin } from "react-icons/ci";
-import React from 'react';
+import { FaUser } from "react-icons/fa";
 
 
 const links = [
@@ -98,7 +98,15 @@ const Nav = () => {
                         )}
                     </MenuItems>
                     <SignedIn>
-                        <UserButton />
+                        <UserButton>
+                            <UserButton.MenuItems>
+                                <UserButton.Action
+                                    label="My Profile"
+                                    labelIcon={<FaUser />}
+                                    onClick={() => window.location.href = '/user-profile'}
+                                />
+                            </UserButton.MenuItems>
+                        </UserButton>
                     </SignedIn>
                 </Menu>
             ) : (
