@@ -8,15 +8,15 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)'])
 export default clerkMiddleware(async (auth, request) => {
     const authData = await auth()
 
-    // Check si la route est publique et si l'utilisateur est connecté
-    if (!isPublicRoute(request) && !authData.userId) {
-        return new Response("Unauthorized", { status: 401 })
-    }
-
     // Check si la route est admin et si l'utilisateur n'est pas admin
     if (isAdminRoute(request) && (authData).sessionClaims?.metadata?.role !== 'admin') {
         const url = new URL('/', request.url)
         return NextResponse.redirect(url)
+    }
+
+    // Check si la route est publique et si l'utilisateur est connecté
+    if (!isPublicRoute(request) && !authData.userId) {
+        return new Response("Unauthorized", { status: 401 })
     }
 })
 
