@@ -1,13 +1,23 @@
 "use client";
 
-import { SignedIn, SignedOut, SignInButton, UserButton, useSession } from '@clerk/nextjs';
+// Next
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+// Clerk
+import { SignedIn, SignedOut, SignInButton, UserButton, useSession } from '@clerk/nextjs';
+
+// Utils
+import { checkUserRoleByMetadata } from '@/utils/userUtils';
+
+// Components
 import ThemeToggle from './ThemeToggle';
+// Headless UI Components
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+
+// Icons
 import { IoChevronDownCircleOutline } from 'react-icons/io5';
 import { CiLogin } from "react-icons/ci";
-import { checkUserRoleByMetadata } from '@/utils/userUtils';
 
 const links = [
     { name: 'Home', path: '/', },
