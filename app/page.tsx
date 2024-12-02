@@ -74,12 +74,12 @@ export default function Home() {
     ]
 
     return (
-        <div>
+        <>
             {/* Hero */}
-            <section className="relative min-h-screen bg-primary-50 py-20">
+            <section className="relative bg-primary-50 py-20 md:min-h-[60vh] lg:min-h-[92vh]">
                 {/* Background image */}
-                <div className="container flex flex-col-reverse md:flex-row items-center md:gap-[3%] gap-10">
-                    <div className="flex w-full md:w-1/2 justify-center">
+                <div className="container flex flex-col-reverse items-center gap-10 md:flex-row md:gap-[3%]">
+                    <div className="flex w-full justify-center md:w-1/2">
                         <Image
                             src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732360066/next-recipe-hero.jpg"
                             alt="Hero"
@@ -92,11 +92,11 @@ export default function Home() {
                             alt="Hero"
                             width={600}
                             height={450}
-                            className="h-[450px] object-cover md:hidden rounded-br-[10%] rounded-tl-[10%] rounded-tr-xl rounded-bl-xl"
+                            className="h-[450px] rounded-bl-xl rounded-br-[10%] rounded-tl-[10%] rounded-tr-xl object-cover md:hidden"
                         />
                     </div>
-                    <div className="w-full md:w-1/2 space-y-4">
-                        <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary">Your <br /> <span className="text-6xl md:text-8xl">Next.js</span><br />cooking recipe</h1>
+                    <div className="container w-full space-y-4 md:w-1/2">
+                        <h1 className="text-4xl font-bold uppercase text-primary md:text-6xl">Your <br /> <span className="text-6xl md:text-8xl">Next.js</span><br />cooking recipe</h1>
                         <h2 className="text-xl">Discover Recipes Crafted by Food Lovers, for Food Lovers</h2>
                         <p>Unleash your inner chef with dishes designed to inspire, created with passion, and perfect for every skill level. Join our community and turn everyday meals into extraordinary moments.</p>
                         <button className="rounded-3xl bg-primary px-7 py-3 font-bold text-text-50">Discover all recipes</button>
@@ -149,19 +149,19 @@ export default function Home() {
                 <div className="container flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
                     <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
-                    <span className="text-md md:text-sm italic">Lorem ipsum dolor sit amet.</span>
+                    <span className="italic md:text-sm">Lorem ipsum dolor sit amet.</span>
                 </div>
             </section>
 
             <section className="mx-auto">
                 <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                     {/* Section texte */}
-                    <div>
+                    <div className="sm:container md:pl-24 lg:pl-32">
                         <h2 className="text-3xl font-bold">About</h2>
-                        <p className="mt-4 leading-relaxed text-gray-700">
+                        <p className="mt-4 leading-relaxed">
                             Our Chefs offer you perfect cooking, best served dishes with fresh ingredients and old recipes.
                         </p>
-                        <p className="mt-4 leading-relaxed text-gray-700">
+                        <p className="mt-4 leading-relaxed">
                             We have carefully sourced and seasonal ingredients in our disposal to make rustic dishes.
                         </p>
                         <a
@@ -173,17 +173,26 @@ export default function Home() {
                     </div>
 
                     {/* Section image */}
-                    <div className="relative h-[500px] w-full overflow-hidden">
+                    <div className="relative h-[60vh] w-full overflow-hidden">
                         <Image
                             src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732314440/chef.jpg"
                             alt="Chefs"
                             layout="fill"
                             objectFit="cover"
                             objectPosition="center"
+                            className="rounded-bl-[10%] rounded-br-xl rounded-tl-xl rounded-tr-[10%] object-cover md:rounded-none"
                         />
                     </div>
                 </div>
+
+                <section className="h-[65vh] bg-accent-100">
+                    <div className="container flex h-full flex-col items-center justify-center space-y-5">
+                        <ImQuotesLeft className="text-4xl text-secondary-800" />
+                        <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
+                        <span className="italic md:text-sm">Lorem ipsum dolor sit amet.</span>
+                    </div>
+                </section>
             </section>
-        </div>
+        </>
     );
 }
