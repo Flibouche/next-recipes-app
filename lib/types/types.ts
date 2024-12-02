@@ -1,4 +1,5 @@
 import { IngredientUnit } from "../enums/enums";
+import { type UserResource } from '@clerk/types';
 
 export interface ApiResponse<T> {
     data?: T;
@@ -60,4 +61,8 @@ export interface Category {
 
 export interface CategoryRequest {
     name: string;
+}
+
+export interface Session {
+    user: UserResource;
 }
