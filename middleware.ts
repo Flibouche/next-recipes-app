@@ -1,17 +1,17 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)'])
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/', '/recipe', '/recipe(.*)', '/blog'])
 
-// export default clerkMiddleware(async (auth, request) => {
-//     const authData = await auth()
+export default clerkMiddleware(async (auth, request) => {
+    const authData = await auth()
 
-//     // Check if the route is private and the user is not authenticated
-//     if (!isPublicRoute(request) && !authData.userId) {
-//         return new Response("Unauthorized", { status: 401 })
-//     }
-// })
+    // Check if the route is private and the user is not authenticated
+    if (!isPublicRoute(request) && !authData.userId) {
+        return new Response("Unauthorized", { status: 401 })
+    }
+})
 
-export default clerkMiddleware();
+// export default clerkMiddleware();
 
 export const config = {
     matcher: [
