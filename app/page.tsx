@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-// import { checkUserRole } from "../utils/userUtils";
-// import { useSession, useUser } from "@clerk/nextjs";
 import { ImQuotesLeft } from "react-icons/im";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -12,10 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 export default function Home() {
-    // const { session } = useSession();
-    // const { user } = useUser();
-    // const userRole = checkUserRole(session);
-
     const sponsors = [
         {
             name: "Cristel",
@@ -82,20 +76,27 @@ export default function Home() {
     return (
         <div>
             {/* Hero */}
-            <section className="relative h-screen bg-primary-50 py-20">
+            <section className="relative min-h-screen bg-primary-50 py-20">
                 {/* Background image */}
-                <div className="container flex flex-row items-center gap-[3%]">
-                    <div className="flex w-1/2 justify-center">
+                <div className="container flex flex-col-reverse md:flex-row items-center md:gap-[3%] gap-10">
+                    <div className="flex w-full md:w-1/2 justify-center">
                         <Image
                             src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732360066/next-recipe-hero.jpg"
                             alt="Hero"
                             width={450}
                             height={450}
-                            className="rounded-e-full"
+                            className="hidden md:block md:rounded-e-full"
+                        />
+                        <Image
+                            src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732360066/next-recipe-hero.jpg"
+                            alt="Hero"
+                            width={600}
+                            height={450}
+                            className="h-[450px] object-cover md:hidden rounded-br-[10%] rounded-tl-[10%] rounded-tr-xl rounded-bl-xl"
                         />
                     </div>
-                    <div className="w-1/2 space-y-4">
-                        <h1 className="text-6xl font-bold uppercase text-primary">Your <br /> <span className="text-8xl">Next.js</span><br />cooking recipe</h1>
+                    <div className="w-full md:w-1/2 space-y-4">
+                        <h1 className="text-4xl md:text-6xl font-bold uppercase text-primary">Your <br /> <span className="text-6xl md:text-8xl">Next.js</span><br />cooking recipe</h1>
                         <h2 className="text-xl">Discover Recipes Crafted by Food Lovers, for Food Lovers</h2>
                         <p>Unleash your inner chef with dishes designed to inspire, created with passion, and perfect for every skill level. Join our community and turn everyday meals into extraordinary moments.</p>
                         <button className="rounded-3xl bg-primary px-7 py-3 font-bold text-text-50">Discover all recipes</button>
@@ -103,6 +104,7 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Sponsors swiper */}
             <section className="h-[20vh] bg-white">
                 <Swiper
                     modules={[Autoplay]}
@@ -147,7 +149,7 @@ export default function Home() {
                 <div className="container flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
                     <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
-                    <span className="text-sm italic">Lorem ipsum dolor sit amet.</span>
+                    <span className="text-md md:text-sm italic">Lorem ipsum dolor sit amet.</span>
                 </div>
             </section>
 
@@ -182,27 +184,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
-            {/* <h1>Home</h1>
-            {session ? (
-                <p>Welcome, you are connected !</p>
-            ) : (
-                <p>Welcome, you are not connected !</p>
-            )}
-
-            {user?.publicMetadata?.role ? (
-                <p className="mt-2 text-red-700">{String(user.publicMetadata.role)}</p>
-            ) : (
-                <p className="mt-2 text-red-500">Aucune description n'est encore définie.</p>
-            )}
-            {user?.publicMetadata?.description ? (
-                <p className="mt-2 text-red-700">{String(user.publicMetadata.description)}</p>
-            ) : (
-                <p className="mt-2 text-red-500">Aucune description n'est encore définie.</p>
-            )} */}
-
-
-
         </div>
     );
 }
