@@ -5,6 +5,7 @@ import { useState } from 'react'
 const AddIngredient = () => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,8 +20,9 @@ const AddIngredient = () => {
             });
 
             if (response.ok) {
-                setMessage('Ingredient added successfully');
                 setName('');
+                setMessage('Ingredient added successfully');
+                setError('');
             } else {
                 const errorText = await response.text();
                 setMessage(`Error: ${errorText}`);
@@ -44,6 +46,7 @@ const AddIngredient = () => {
                 <button type='submit'>Add ingredient</button>
             </form>
             {message && <p>{message}</p>}
+            {error && <p>{error}</p>}
         </div>
     );
 };
