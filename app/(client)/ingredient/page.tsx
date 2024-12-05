@@ -3,6 +3,9 @@
 // React
 import { useEffect, useState } from "react";
 
+// Routes
+import { API_ROUTES } from "@/lib/routes";
+
 // Interfaces & Types
 import type { Ingredient } from "@/lib/types/types";
 
@@ -15,7 +18,7 @@ export default function IngredientPage() {
 
     // Fonction pour récupérer les ingrédients
     const fetchIngredients = async () => {
-        const response = await fetch('/api/ingredient');
+        const response = await fetch(API_ROUTES.INGREDIENTS.GET_ALL);
         const ingredients = await response.json();
         setIngredients(ingredients.data);
     }
