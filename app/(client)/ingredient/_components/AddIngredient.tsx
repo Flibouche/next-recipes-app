@@ -1,22 +1,35 @@
 "use client";
 
-import { useState } from 'react'
+// React
+import React, { useState } from 'react'
+
+// Packages
 import toast from 'react-hot-toast';
+
+// Components
+import FormInput from '@/components/FormInput';
 
 interface AddIngredientProps {
     onIngredientAdded: () => void;
 }
 
-const AddIngredient = ({ onIngredientAdded }: AddIngredientProps) => {
-    const [name, setName] = useState('');
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+interface IngredientResponse {
+    message: string;
+}
 
-    const handleSubmit = async (e: React.FormEvent) => {
+// Le composant AddIngredient permet aux utilisateurs d'ajouter un nouvel ingrédient à la liste.
+// Il prend une prop `onIngredientAdded` qui est une fonction de rappel pour rafraîchir la liste des ingrédients après l'ajout d'un nouvel ingrédient.
+export default function AddIngredient({ onIngredientAdded }: AddIngredientProps) {
+    // Etat local pour stocker le nom de l'ingrédient
+    const [name, setName] = useState<string>('');
+
+    // Fonction pour gérer la soumission du formulaire et ajouter un nouvel ingrédient
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
         try {
-            const response = await fetch('/api/ingredient', {
+            // 1. Appel de l'API pour ajouter un ingrédient
+            const response: Response = await fetch('/api/ingredient', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,36 +37,38 @@ const AddIngredient = ({ onIngredientAdded }: AddIngredientProps) => {
                 body: JSON.stringify({ name }),
             });
 
+            // 2. Vérification de la réponse de l'API
             if (response.ok) {
                 setName('');
-                setMessage('Ingredient added successfully');
-                setError('');
+                toast.success('Ingredient added successfully');
                 onIngredientAdded();
             } else {
-                const errorText = await response.text();
-                console.log(errorText);
-                toast.error(errorText)
-                // setMessage(`Error: ${errorText}`);
+                const errorData: IngredientResponse = await response.json();
+                console.log(errorData.message);
+                toast.error(`Error: ${errorData.message}`);
             }
-        } catch (error) {
-            toast.error("This didn't work.")
-            setMessage(`Error: ${error}`);
+
+        } catch (error) { // 3. Si une erreur se produit, affichez un message d'erreur
+            console.error('Error adding ingredient:', error);
+            toast.error(`An unexpected error occurred. Please try again later.`);
+
+        } finally {  // 4. Dans tous les cas, réinitialisez le nom de l'ingrédient
+            setName('');
         }
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit} className='flex flex-col'>
-            <label htmlFor={name}>Name</label>
-            <input
+            <FormInput
+                htmlFor='name'
+                labelText='Name'
+                idName='name'
                 type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder='Name of the ingredient'
-                required
             />
             <button type='submit' className='my-3 rounded-3xl bg-primary px-7 py-3 font-bold text-text-50 hover:bg-primary-700'>Add ingredient</button>
         </form>
     );
 };
-
-export default AddIngredient

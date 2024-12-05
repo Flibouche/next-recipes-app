@@ -12,6 +12,8 @@ export interface ErrorDisplayProps {
     reset: () => void
 }
 
+// Recipe
+
 export interface Recipe {
     id: string;
     name: string;
@@ -45,6 +47,8 @@ export interface RecipeStep {
     duration: number;
 }
 
+// Ingredient
+
 export interface Ingredient {
     id: string;
     name: string;
@@ -54,6 +58,8 @@ export interface IngredientRequest {
     name: string;
 }
 
+// Category
+
 export interface Category {
     id: string;
     name: string;
@@ -62,6 +68,20 @@ export interface Category {
 export interface CategoryRequest {
     name: string;
 }
+
+// Form
+
+export interface FormInputProps {
+    htmlFor: string;
+    labelText: string;
+    idName: string;
+    type: string;
+    value: string | number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder?: string;
+}
+
+// Session
 
 export interface Session {
     user: UserResource;

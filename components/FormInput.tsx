@@ -1,14 +1,7 @@
-interface FormInputProps {
-    htmlFor: string;
-    labelText: string;
-    idName: string;
-    type: string;
-    value: string | number;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder?: string;
-}
+// Interfaces & Types
+import { FormInputProps } from "@/lib/types/types";
 
-const FormInput = ({ htmlFor, labelText, idName, type, value, onChange, placeholder }: FormInputProps) => {
+export default function FormInput({ htmlFor, labelText, idName, type, value, onChange, placeholder }: FormInputProps) {
     return (
         <div className='flex flex-col'>
             <label htmlFor={htmlFor}>{labelText}</label>
@@ -23,5 +16,3 @@ const FormInput = ({ htmlFor, labelText, idName, type, value, onChange, placehol
         </div>
     )
 }
-
-export default FormInput
