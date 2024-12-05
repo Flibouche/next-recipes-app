@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast';
 
-const AddIngredient = () => {
+interface AddIngredientProps {
+    onIngredientAdded: () => void;
+}
+
+const AddIngredient = ({ onIngredientAdded }: AddIngredientProps) => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -24,8 +28,10 @@ const AddIngredient = () => {
                 setName('');
                 setMessage('Ingredient added successfully');
                 setError('');
+                onIngredientAdded();
             } else {
                 const errorText = await response.text();
+                console.log(errorText);
                 toast.error(errorText)
                 // setMessage(`Error: ${errorText}`);
             }
@@ -36,21 +42,17 @@ const AddIngredient = () => {
     }
 
     return (
-        <div>
-            <h1>Add an ingredient</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder='Name of the ingredient'
-                    required
-                />
-                <button type='submit'>Add ingredient</button>
-            </form>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
-        </div>
+        <form onSubmit={handleSubmit} className='flex flex-col'>
+            <label htmlFor={name}>Name</label>
+            <input
+                type='text'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder='Name of the ingredient'
+                required
+            />
+            <button type='submit' className='my-3 rounded-3xl bg-primary px-7 py-3 font-bold text-text-50 hover:bg-primary-700'>Add ingredient</button>
+        </form>
     );
 };
 

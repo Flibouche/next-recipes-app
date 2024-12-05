@@ -8,11 +8,17 @@ export async function GET(): Promise<NextResponse> {
     try {
         // 1. Je récupère la liste des ingrédients
         const ingredients: Ingredient[] = await db.ingredient.findMany({
+            select: {
+                id: true,
+                name: true,
+                imageUrl: true
+            },
             orderBy: {
                 name: 'asc'
             }
         });
         if (!ingredients) {
+            console.log(ingredients);
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Ingredients not found", success: false }, { status: 404 })
         }
 

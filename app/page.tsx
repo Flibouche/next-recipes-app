@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import Link from "next/link";
 
 export default function Home() {
     const sponsors = [
@@ -99,7 +100,11 @@ export default function Home() {
                         <h1 className="text-4xl font-bold uppercase text-primary md:text-6xl">Your <br /> <span className="text-6xl md:text-8xl">Next.js</span><br />cooking recipe</h1>
                         <h2 className="text-xl">Discover Recipes Crafted by Food Lovers, for Food Lovers</h2>
                         <p>Unleash your inner chef with dishes designed to inspire, created with passion, and perfect for every skill level. Join our community and turn everyday meals into extraordinary moments.</p>
-                        <button className="rounded-3xl bg-primary px-7 py-3 font-bold text-text-50">Discover all recipes</button>
+                        <Link href="/recipe">
+                            <button className="my-3 rounded-3xl bg-primary px-7 py-3 font-bold text-text-50 hover:bg-primary-700">
+                                Discover all recipes
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section>

@@ -5,13 +5,49 @@ export async function checkIsExisting(table: 'ingredient' | 'recipe' | 'category
 
     switch (table) {
         case 'ingredient':
-            return (await db.ingredient.findUnique({ where: { name: trimmedName } })) !== null;
+            return (
+                await db.ingredient.findFirst({
+                    where: {
+                        name: {
+                            equals: trimmedName,
+                            mode: 'insensitive', // Ignore la casse
+                        },
+                    },
+                })
+            ) !== null;
         case 'recipe':
-            return (await db.recipe.findUnique({ where: { name: trimmedName } })) !== null;
+            return (
+                await db.recipe.findFirst({
+                    where: {
+                        name: {
+                            equals: trimmedName,
+                            mode: 'insensitive',
+                        },
+                    },
+                })
+            ) !== null;
         case 'category':
-            return (await db.category.findUnique({ where: { name: trimmedName } })) !== null;
+            return (
+                await db.category.findFirst({
+                    where: {
+                        name: {
+                            equals: trimmedName,
+                            mode: 'insensitive',
+                        },
+                    },
+                })
+            ) !== null;
         case 'tag':
-            return (await db.tag.findUnique({ where: { name: trimmedName } })) !== null;
+            return (
+                await db.tag.findFirst({
+                    where: {
+                        name: {
+                            equals: trimmedName,
+                            mode: 'insensitive',
+                        },
+                    },
+                })
+            ) !== null;
         default:
             return false;
     }
