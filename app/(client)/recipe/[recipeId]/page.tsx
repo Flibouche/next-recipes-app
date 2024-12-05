@@ -15,14 +15,21 @@ export default async function DetailedRecipe({ params }: { params: { recipeId: s
 
     return (
         <>
+            <p>{id}</p>
             <h1>{name}</h1>
             <p>{cookingTime}</p>
+            <p>{categoryId}</p>
+            <p>{category.name}</p>
             <Image
                 src={imageUrl || ''}
                 alt={name}
                 width={300}
                 height={300}
             />
+            <p>{numberOfServings}</p>
+            <p>{difficulty}</p>
+            <p>{vegan}</p>
+            <p>{healthy}</p>
         </>
     )
 }
