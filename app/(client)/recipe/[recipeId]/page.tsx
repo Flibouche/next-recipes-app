@@ -4,7 +4,11 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
 
-export default async function DetailedRecipe({ params }: { params: { recipeId: string } }) {
+interface RecipePageProps {
+    params: { recipeId: string };
+}
+
+export default async function DetailedRecipe({ params }: RecipePageProps) {
     const data: Recipe = await fetchDetailedRecipe(params.recipeId);
     if (!data) {
         return notFound();
