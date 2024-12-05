@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 // Components
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
     title: "Your Next Recipe",
@@ -25,6 +26,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         <ClerkProvider>
             <html lang="en" suppressHydrationWarning>
                 <body>
+                    <Toaster />
                     <ThemeProvider attribute="class" defaultTheme={"system"} enableSystem>
                         <Header />
                         <main className="min-h-screen bg-primary-50">

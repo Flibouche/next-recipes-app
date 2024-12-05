@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react'
+import toast from 'react-hot-toast';
 
 const AddIngredient = () => {
     const [name, setName] = useState('');
@@ -25,9 +26,11 @@ const AddIngredient = () => {
                 setError('');
             } else {
                 const errorText = await response.text();
-                setMessage(`Error: ${errorText}`);
+                toast.error(errorText)
+                // setMessage(`Error: ${errorText}`);
             }
         } catch (error) {
+            toast.error("This didn't work.")
             setMessage(`Error: ${error}`);
         }
     }
