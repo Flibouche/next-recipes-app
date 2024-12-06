@@ -5,29 +5,25 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { Metadata } from 'next';
 
-type RecipePageProps = {
-    params: {
-        recipeId: string;
-    };
-};
-
-export async function generateMetadata({ params }: RecipePageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ recipeId: string }> }): Promise<Metadata> {
     try {
-        const recipe = await fetchDetailedRecipe(params.recipeId);
+        const resolvedParams = await params;
+        const recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
         return {
             title: recipe.name,
-            description: `Détails de la recette ${recipe.name}`
+            description: `Détails de la recette ${recipe.name}`,
         };
     } catch (error) {
         console.error('[RECIPE_METADATA]', error);
         return {
-            title: 'Recette non trouvée'
+            title: 'Recette non trouvée',
         };
     }
 }
 
-export default async function DetailedRecipe({ params }: RecipePageProps) {
-    const data: Recipe = await fetchDetailedRecipe(params.recipeId);
+export default async function DetailedRecipe({ params }: { params: Promise<{ recipeId: string }> }) {
+    const resolvedParams = await params;
+    const data: Recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
     if (!data) {
         return notFound();
     }
@@ -41,7 +37,7 @@ export default async function DetailedRecipe({ params }: RecipePageProps) {
             <h1>{name}</h1>
             <p>{cookingTime}</p>
             <p>{categoryId}</p>
-            <p>{category.name}</p>
+            <p>{category?.name}</p>
             <Image
                 src={imageUrl || ''}
                 alt={name}
@@ -50,8 +46,8 @@ export default async function DetailedRecipe({ params }: RecipePageProps) {
             />
             <p>{numberOfServings}</p>
             <p>{difficulty}</p>
-            <p>{vegan}</p>
-            <p>{healthy}</p>
+            <p>{vegan ? 'Vegan' : 'Non-Vegan'}</p>
+            <p>{healthy ? 'Healthy' : 'Not Healthy'}</p>
         </>
-    )
+    );
 }
