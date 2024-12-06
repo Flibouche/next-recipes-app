@@ -15,19 +15,21 @@ export default async function Recipe() {
     }
 
     return (
-        <>
-            <h1>Recipes :</h1>
-            <nav>
-                <Link href='/recipe/add'>Add a recipe</Link>
-            </nav>
-            <div className='container mx-auto px-4 py-6'>
-                {recipes ? (
-                    <RecipesList recipes={recipes} />
-                ) : (
-                    <p>No recipes available</p>
-                )}
+        <section className="min-h-screen py-20">
+            <div className="container">
+                <h1>Recipes :</h1>
+                <nav>
+                    <Link href='/recipe/add'>Add a recipe</Link>
+                </nav>
+                <div className='px-4 py-6'>
+                    {recipes ? (
+                        <RecipesList recipes={recipes} />
+                    ) : (
+                        <p>No recipes available</p>
+                    )}
+                </div>
+                {error && <p>{error}</p>}
             </div>
-            {error && <p>{error}</p>}
-        </>
+        </section>
     )
 }
