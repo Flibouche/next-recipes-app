@@ -16,7 +16,8 @@ const nextConfig: NextConfig = {
                 hostname: "img.clerk.com",
             }
         ],
-    }
+    },
+    swcMinify: false,
 };
 
 export default nextConfig;
