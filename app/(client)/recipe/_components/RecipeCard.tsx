@@ -4,7 +4,9 @@ import Link from 'next/link';
 import React from 'react';
 import { IoMdPerson, IoIosTimer } from 'react-icons/io';
 
-const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTime }: Recipe) => {
+type RecipeCardProps = Pick<Recipe, 'id' | 'imageUrl' | 'name' | 'category' | 'numberOfServings' | 'cookingTime'>;
+
+const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTime }: RecipeCardProps) => {
     return (
         <div
             key={id}
