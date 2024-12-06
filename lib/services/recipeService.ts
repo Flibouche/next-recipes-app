@@ -22,7 +22,7 @@ export async function fetchRecipes(): Promise<Recipe[]> {
 export async function fetchDetailedRecipe(recipeId: string): Promise<Recipe> {
     try {
 
-        if (recipeId === undefined) {
+        if (!recipeId) {
             throw new Error('Recipe ID is required');
         }
 
