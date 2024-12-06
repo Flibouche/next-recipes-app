@@ -1,5 +1,7 @@
-import { Recipe } from '@/lib/types/types';
+// import { Recipe } from '@/lib/types/types';
 import { fetchDetailedRecipe } from '@/lib/services/recipeService';
+import { Recipe } from '@/lib/types/types';
+// import { RecipeIngredient } from '@/lib/types/types';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
@@ -28,6 +30,7 @@ type Props = {
 export default async function DetailedRecipe({ params }: Props) {
     const { recipeId } = await params;
     const data: Recipe = await fetchDetailedRecipe(recipeId);
+    console.table(data.ingredients[0].ingredient.name);
     if (!data) {
         return notFound();
     }

@@ -14,6 +14,12 @@ export async function GET(request: NextRequest, { params }: Props) {
             where: { id: recipeId },
             include: {
                 category: true,
+                steps: true,
+                ingredients: {
+                    include: {
+                        ingredient: true,
+                    }
+                }
             },
         }) as Recipe;
 

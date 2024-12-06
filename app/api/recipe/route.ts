@@ -42,23 +42,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
         const { name, categoryId, imageUrl, cookingTime, numberOfServings, difficulty, vegan, healthy, ingredients, steps }: RecipeRequest = await req.json();
 
-        const requiredFields = [
-            { field: name, message: "Name is required" },
-            { field: categoryId, message: "Category is required" },
-            { field: imageUrl, message: "Image URL is required" },
-            { field: cookingTime, message: "Cooking time is required" },
-            { field: numberOfServings, message: "Number of servings is required" },
-            { field: difficulty, message: "Difficulty is required" },
-            { field: ingredients, message: "Ingredients are required" },
-            { field: steps, message: "Steps are required" }
-        ];
-
-        for (const { field, message } of requiredFields) {
-            if (!field) {
-                return NextResponse.json<ApiResponse<null>>({ data: null, message, success: false }, { status: 400 });
-            }
-        };
-
         const isExisting: boolean = await checkIsExisting('recipe', name);
         if (isExisting) {
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "A recipe with this name already exists", success: false }, { status: 409 })

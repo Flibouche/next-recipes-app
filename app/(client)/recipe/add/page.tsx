@@ -1,12 +1,19 @@
 "use client";
 
+// React
 import { useEffect, useState } from 'react';
+
+// Packages
 import { z } from 'zod';
+
+// Interfaces & Types
+import { RecipeIngredientCreate, RecipeStep } from '@/lib/types/types';
+
+// Enums
+import { IngredientUnit } from '@/lib/enums/enums';
 
 // Components
 import FormInput from '@/components/FormInput';
-import { RecipeIngredient, RecipeStep } from '@/lib/types/types';
-import { IngredientUnit } from '@/lib/enums/enums';
 
 const AddRecipe = () => {
     //#region //* STATES
@@ -19,7 +26,7 @@ const AddRecipe = () => {
     const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
     //? Ingredients states
-    const [ingredients, setIngredients] = useState<RecipeIngredient[]>([
+    const [ingredients, setIngredients] = useState<RecipeIngredientCreate[]>([
         { ingredientId: '', quantity: 0, unit: IngredientUnit.GRAM },
     ]);
     const [availableIngredients, setAvailableIngredients] = useState<{ id: string; name: string, imageUrl: string }[]>([]);
@@ -92,7 +99,7 @@ const AddRecipe = () => {
 
     //#region //* INGREDIENTS
     // Fonction pour gérer le changement d'un champ spécifique d'un ingrédient
-    const handleIngredientChange = <T extends keyof RecipeIngredient>(index: number, field: T, value: RecipeIngredient[T]) => {
+    const handleIngredientChange = <T extends keyof RecipeIngredientCreate>(index: number, field: T, value: RecipeIngredientCreate[T]) => {
         const updatedIngredients = [...ingredients]; // Création d'une copie du tableau des ingrédients pour éviter de muter l'état directement        
         updatedIngredients[index][field] = value; // Mise à jour du champ spécifié de l'ingrédient à l'index donné
         setIngredients(updatedIngredients);// Mise à jour de l'état avec le tableau des ingrédients modifié

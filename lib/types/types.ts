@@ -37,9 +37,20 @@ export interface RecipesList {
 
 export interface RecipeIngredient {
     ingredientId: string;
+    recipeId: string;
+    id: string;
     quantity: number;
     unit: IngredientUnit;
+    ingredient: Ingredient;
 }
+
+export type RecipeIngredientCreate = Omit<RecipeIngredient, 'recipeId' | 'id' | 'ingredient'>;
+
+// export interface RecipeIngredient {
+//     id: string;
+//     recipeId: string;
+//     ingredient: Ingredient;
+// }
 
 export interface RecipeStep {
     stepNumber: number;
