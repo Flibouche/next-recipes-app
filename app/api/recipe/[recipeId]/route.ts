@@ -1,10 +1,10 @@
 import { db } from "@/lib/db";
 import { ApiResponse, Recipe } from "@/lib/types/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request, context: { params: { recipeId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { recipeId: string } }) {
     try {
-        const { recipeId } = context.params;
+        const { recipeId } = params;
 
         const recipe = await db.recipe.findUnique({
             where: { id: recipeId },
