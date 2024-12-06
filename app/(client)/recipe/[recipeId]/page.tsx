@@ -3,27 +3,31 @@ import { fetchDetailedRecipe } from '@/lib/services/recipeService';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: Promise<{ recipeId: string }> }): Promise<Metadata> {
-    try {
-        const resolvedParams = await params;
-        const recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
-        return {
-            title: recipe.name,
-            description: `Détails de la recette ${recipe.name}`,
-        };
-    } catch (error) {
-        console.error('[RECIPE_METADATA]', error);
-        return {
-            title: 'Recette non trouvée',
-        };
-    }
+// export async function generateMetadata({ params }: { params: Promise<{ recipeId: string }> }): Promise<Metadata> {
+//     try {
+//         const resolvedParams = await params;
+//         const recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
+//         return {
+//             title: recipe.name,
+//             description: `Détails de la recette ${recipe.name}`,
+//         };
+//     } catch (error) {
+//         console.error('[RECIPE_METADATA]', error);
+//         return {
+//             title: 'Recette non trouvée',
+//         };
+//     }
+// }
+
+type Props = {
+    params: Promise<{ recipeId: string }>
 }
 
-export default async function DetailedRecipe({ params }: { params: Promise<{ recipeId: string }> }) {
-    const resolvedParams = await params;
-    const data: Recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
+export default async function DetailedRecipe({ params }: Props) {
+    const { recipeId } = await params;
+    const data: Recipe = await fetchDetailedRecipe(recipeId);
     if (!data) {
         return notFound();
     }

@@ -26,7 +26,7 @@ export async function fetchDetailedRecipe(recipeId: string): Promise<Recipe> {
             throw new Error('Recipe ID is required');
         }
 
-        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/recipe/${recipeId}`, { method: 'GET', next: { revalidate: 10 } });
+        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/recipe/${recipeId}`, { method: 'GET', cache: 'no-cache' });
         if (!response.ok) {
             throw new Error('Failed to fetch recipe');
         }
