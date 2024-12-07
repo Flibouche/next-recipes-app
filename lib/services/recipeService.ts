@@ -1,9 +1,51 @@
-import { ApiResponse, Recipe } from "@/lib/types/types";
+import { ApiResponse } from "@/lib/types/types";
+import { API_ROUTES } from "../routes";
+
+interface Recipe {
+    id: string;
+    name: string;
+    categoryId: string;
+    category: Category;
+    imageUrl: string | null;
+    cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+}
+
+interface RecipeWithID extends Recipe {
+    ingredients: Ingredients[];
+    steps: Steps[];
+}
+
+interface Category {
+    id: string;
+    name: string;
+}
+
+interface Ingredient {
+    id: string;
+    name: string;
+}
+
+interface Ingredients {
+    id: string;
+    quantity: number;
+    unit: string;
+    ingredient: Ingredient;
+}
+
+interface Steps {
+    id: string;
+    stepNumber: number;
+    description: string;
+    duration: number;
+}
 
 export async function fetchRecipes(): Promise<Recipe[]> {
     try {
-        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/recipe`, { method: 'GET' });
-        // const response: Response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/recipe`, { method: 'GET', next: { revalidate: 10 } });
+        const response: Response = await fetch(API_ROUTES.RECIPES.GET_ALL, { method: 'GET' });
         if (!response.ok) {
             throw new Error('Failed to fetch recipes');
         }
@@ -19,19 +61,19 @@ export async function fetchRecipes(): Promise<Recipe[]> {
     }
 }
 
-export async function fetchDetailedRecipe(recipeId: string): Promise<Recipe> {
+export async function fetchDetailedRecipe(recipeId: string): Promise<RecipeWithID> {
     try {
 
         if (!recipeId) {
             throw new Error('Recipe ID is required');
         }
 
-        const response: Response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/recipe/${recipeId}`, { method: 'GET', cache: 'no-cache' });
+        const response: Response = await fetch(API_ROUTES.RECIPES.GET_ONE(recipeId), { method: 'GET', cache: 'no-cache' });
         if (!response.ok) {
             throw new Error('Failed to fetch recipe');
         }
 
-        const data: ApiResponse<Recipe> = await response.json();
+        const data: ApiResponse<RecipeWithID> = await response.json();
         if (!data.success) {
             throw new Error(data.message);
         }

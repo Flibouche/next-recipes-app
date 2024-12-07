@@ -1,5 +1,6 @@
-import { IngredientUnit } from "../enums/enums";
-import { type UserResource } from '@clerk/types';
+import { UserResource } from '@clerk/types';
+
+// API
 
 export interface ApiResponse<T> {
     data?: T;
@@ -7,77 +8,11 @@ export interface ApiResponse<T> {
     success: boolean;
 }
 
+// Error
+
 export interface ErrorDisplayProps {
     message: string
     reset: () => void
-}
-
-// Recipe
-
-export interface Recipe {
-    id: string;
-    name: string;
-    category: { id: string, name: string };
-    categoryId: string;
-    imageUrl: string | null;
-    cookingTime: number;
-    numberOfServings: number;
-    difficulty: number;
-    vegan: boolean;
-    healthy: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    ingredients: RecipeIngredient[];
-    steps: RecipeStep[];
-}
-
-export interface RecipesList {
-    recipes: Recipe[];
-}
-
-export interface RecipeIngredient {
-    ingredientId: string;
-    recipeId: string;
-    id: string;
-    quantity: number;
-    unit: IngredientUnit;
-    ingredient: Ingredient;
-}
-
-export type RecipeIngredientCreate = Omit<RecipeIngredient, 'recipeId' | 'id' | 'ingredient'>;
-
-// export interface RecipeIngredient {
-//     id: string;
-//     recipeId: string;
-//     ingredient: Ingredient;
-// }
-
-export interface RecipeStep {
-    stepNumber: number;
-    description: string;
-    duration: number;
-}
-
-// Ingredient
-
-export interface Ingredient {
-    id: string;
-    name: string;
-}
-
-export interface IngredientRequest {
-    name: string;
-}
-
-// Category
-
-export interface Category {
-    id: string;
-    name: string;
-}
-
-export interface CategoryRequest {
-    name: string;
 }
 
 // Form

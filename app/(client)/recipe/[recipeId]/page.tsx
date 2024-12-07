@@ -1,30 +1,40 @@
-// import { Recipe } from '@/lib/types/types';
+
 import { fetchDetailedRecipe } from '@/lib/services/recipeService';
-import { Recipe } from '@/lib/types/types';
-// import { RecipeIngredient } from '@/lib/types/types';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
-// import { Metadata } from 'next';
-
-// export async function generateMetadata({ params }: { params: Promise<{ recipeId: string }> }): Promise<Metadata> {
-//     try {
-//         const resolvedParams = await params;
-//         const recipe = await fetchDetailedRecipe(resolvedParams.recipeId);
-//         return {
-//             title: recipe.name,
-//             description: `Détails de la recette ${recipe.name}`,
-//         };
-//     } catch (error) {
-//         console.error('[RECIPE_METADATA]', error);
-//         return {
-//             title: 'Recette non trouvée',
-//         };
-//     }
-// }
 
 type Props = {
     params: Promise<{ recipeId: string }>
+}
+
+interface Recipe {
+    id: string;
+    name: string;
+    categoryId: string;
+    category: { id: string, name: string };
+    imageUrl: string | null;
+    cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+    ingredients: Ingredients[];
+    steps: Steps[];
+}
+
+interface Ingredients {
+    id: string;
+    quantity: number;
+    unit: string;
+    ingredient: { id: string, name: string };
+}
+
+interface Steps {
+    id: string;
+    stepNumber: number;
+    description: string;
+    duration: number;
 }
 
 export default async function DetailedRecipe({ params }: Props) {

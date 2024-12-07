@@ -7,7 +7,28 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
 // Interfaces & Types
-import { RecipeIngredientCreate, RecipeStep } from '@/lib/types/types';
+interface Recipe {
+    name: string;
+    categoryId: string;
+    imageUrl: string | null;
+    cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+}
+
+interface RecipeIngredient {
+    ingredientId: string;
+    quantity: number;
+    unit: IngredientUnit;
+}
+
+interface RecipeStep {
+    stepNumber: number;
+    description: string;
+    duration: number;
+}
 
 // Enums
 import { IngredientUnit } from '@/lib/enums/enums';
@@ -18,7 +39,7 @@ import FormInput from '@/components/FormInput';
 const AddRecipe = () => {
     //#region //* STATES
     //? Recipe states
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState<Recipe>({
         name: '', categoryId: '', imageUrl: '', cookingTime: 0, numberOfServings: 0, difficulty: 0, vegan: false, healthy: false
     });
 
@@ -26,7 +47,7 @@ const AddRecipe = () => {
     const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
     //? Ingredients states
-    const [ingredients, setIngredients] = useState<RecipeIngredientCreate[]>([
+    const [ingredients, setIngredients] = useState<RecipeIngredient[]>([
         { ingredientId: '', quantity: 0, unit: IngredientUnit.GRAM },
     ]);
     const [availableIngredients, setAvailableIngredients] = useState<{ id: string; name: string, imageUrl: string }[]>([]);
@@ -99,7 +120,7 @@ const AddRecipe = () => {
 
     //#region //* INGREDIENTS
     // Fonction pour gérer le changement d'un champ spécifique d'un ingrédient
-    const handleIngredientChange = <T extends keyof RecipeIngredientCreate>(index: number, field: T, value: RecipeIngredientCreate[T]) => {
+    const handleIngredientChange = <T extends keyof RecipeIngredient>(index: number, field: T, value: RecipeIngredient[T]) => {
         const updatedIngredients = [...ingredients]; // Création d'une copie du tableau des ingrédients pour éviter de muter l'état directement        
         updatedIngredients[index][field] = value; // Mise à jour du champ spécifié de l'ingrédient à l'index donné
         setIngredients(updatedIngredients);// Mise à jour de l'état avec le tableau des ingrédients modifié
@@ -264,7 +285,7 @@ const AddRecipe = () => {
                     labelText="Image URL"
                     idName="recipeImageUrl"
                     type="text"
-                    value={recipe.imageUrl}
+                    value={recipe.imageUrl || ''}
                     onChange={(e) => handleRecipeChange('imageUrl', e.target.value)}
                     placeholder="Image URL"
                 />

@@ -1,6 +1,11 @@
 import { db } from '@/lib/db';
-import { ApiResponse, Category } from '@/lib/types/types';
+import { ApiResponse } from '@/lib/types/types';
 import { NextResponse } from 'next/server';
+
+interface Category {
+    id: string;
+    name: string;
+}
 
 export async function GET(): Promise<NextResponse> {
     try {
@@ -16,7 +21,9 @@ export async function GET(): Promise<NextResponse> {
 
         return NextResponse.json<ApiResponse<Category[]>>({ data: categories, message: "Categories found", success: true }, { status: 200 })
     } catch (error) {
-        console.log("[CATEGORIES_GET]", error);
+        if (process.env.NODE_ENV === 'development') {
+            console.log("[CATEGORIES_GET]", error);
+        }
         return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
 }

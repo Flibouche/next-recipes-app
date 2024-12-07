@@ -1,13 +1,23 @@
 import { db } from '@/lib/db';
-import { ApiResponse, Recipe, RecipeIngredient, RecipeStep } from '@/lib/types/types';
-import { checkIsExisting } from '@/lib/validators/db-validators';
-import { NextRequest, NextResponse } from 'next/server';
+import { ApiResponse } from '@/lib/types/types';
+import { NextResponse } from 'next/server';
 
-type GetUndetailedRecipe = Omit<Recipe, "createdAt" | "updatedAt" | "ingredients" | "steps">;
+interface Recipe {
+    id: string;
+    name: string;
+    categoryId: string;
+    category: { id: string, name: string };
+    imageUrl: string | null;
+    cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+}
 
 export async function GET(): Promise<NextResponse> {
     try {
-        const recipes: GetUndetailedRecipe[] = await db.recipe.findMany({
+        const recipes: Recipe[] = await db.recipe.findMany({
             select: {
                 id: true,
                 name: true,
@@ -28,59 +38,11 @@ export async function GET(): Promise<NextResponse> {
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Recipes not found", success: false }, { status: 404 });
         }
 
-        return NextResponse.json<ApiResponse<GetUndetailedRecipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
+        return NextResponse.json<ApiResponse<Recipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
     } catch (error) {
-        console.log("[RECIPES]", error);
-        return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
-    }
-}
-
-type RecipeRequest = Omit<Recipe, "id" | "createdAt" | "updatedAt">;
-type RecipeResponse = Omit<Recipe, "category" | "ingredients" | "steps">;
-
-export async function POST(req: NextRequest): Promise<NextResponse> {
-    try {
-        const { name, categoryId, imageUrl, cookingTime, numberOfServings, difficulty, vegan, healthy, ingredients, steps }: RecipeRequest = await req.json();
-
-        const isExisting: boolean = await checkIsExisting('recipe', name);
-        if (isExisting) {
-            return NextResponse.json<ApiResponse<null>>({ data: null, message: "A recipe with this name already exists", success: false }, { status: 409 })
+        if (process.env.NODE_ENV === 'development') {
+            console.log("[RECIPES_GET]", error);
         }
-
-        const newRecipe: RecipeResponse = await db.recipe.create({
-            data: {
-                name: name.trim(),
-                categoryId,
-                imageUrl,
-                cookingTime,
-                numberOfServings,
-                difficulty,
-                vegan,
-                healthy,
-                ingredients: {
-                    create: ingredients.map((ingredient: RecipeIngredient) => ({
-                        ingredient: {
-                            connect: {
-                                id: ingredient.ingredientId
-                            }
-                        },
-                        quantity: ingredient.quantity,
-                        unit: ingredient.unit
-                    })),
-                },
-                steps: {
-                    create: steps.map((step: RecipeStep, index: number) => ({
-                        stepNumber: index + 1,
-                        description: step.description,
-                        duration: step.duration,
-                    })),
-                },
-            },
-        });
-
-        return NextResponse.json<ApiResponse<RecipeResponse>>({ data: newRecipe, message: "Recipe created", success: true }, { status: 201 });
-    } catch (error) {
-        console.log("[RECIPES]", error);
         return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
 }

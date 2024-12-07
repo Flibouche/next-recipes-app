@@ -3,12 +3,29 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, A11y, Autoplay } from 'swiper/modules';
-import type { RecipesList } from '@/lib/types/types';
 import RecipeCard from './RecipeCard';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+
+interface Recipe {
+    id: string;
+    name: string;
+    imageUrl: string | null;
+    category: Category;
+    numberOfServings: number;
+    cookingTime: number;
+}
+
+interface Category {
+    id: string;
+    name: string;
+}
+
+interface RecipesList {
+    recipes: Recipe[];
+}
 
 const RecipesList = ({ recipes }: RecipesList) => {
     return (

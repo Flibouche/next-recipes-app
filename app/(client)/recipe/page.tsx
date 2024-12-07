@@ -1,7 +1,24 @@
 import Link from 'next/link'
 import { fetchRecipes } from '@/lib/services/recipeService';
-import type { Recipe } from '@/lib/types/types';
 import RecipesList from './_components/RecipesList';
+
+interface Recipe {
+    id: string;
+    name: string;
+    categoryId: string;
+    category: Category;
+    imageUrl: string | null;
+    cookingTime: number;
+    numberOfServings: number;
+    difficulty: number;
+    vegan: boolean;
+    healthy: boolean;
+}
+
+interface Category {
+    id: string;
+    name: string;
+}
 
 export default async function Recipe() {
     let recipes: Recipe[] | null = null;

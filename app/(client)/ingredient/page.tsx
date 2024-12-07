@@ -7,7 +7,10 @@ import { useEffect, useState } from "react";
 import { API_ROUTES } from "@/lib/routes";
 
 // Interfaces & Types
-import type { Ingredient } from "@/lib/types/types";
+interface Ingredient {
+    id: string;
+    name: string;
+}
 
 // Components
 import AddIngredient from "./_components/AddIngredient";
