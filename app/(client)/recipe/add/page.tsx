@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 // Packages
 import { z } from 'zod';
 
+// Constants
+import { API_ROUTES } from '@/lib/routes';
+
 // Interfaces & Types
 interface Recipe {
     name: string;
@@ -200,7 +203,7 @@ const AddRecipe = () => {
         try {
             recipeSchema.parse(recipeData);
 
-            const response = await fetch('/api/recipe', {
+            const response = await fetch(API_ROUTES.RECIPES.CREATE, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

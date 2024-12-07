@@ -1,9 +1,13 @@
+const API_URL = process.env.NEXT_PUBLIC_APP_URL;
+
 export const API_ROUTES = {
     INGREDIENTS: {
-        GET_ALL: `${process.env.NEXT_PUBLIC_APP_URL}/api/ingredient`,
+        GET_ALL: `${API_URL}/api/ingredient`,
+        CREATE: `${API_URL}/api/ingredient/create`,
     },
     RECIPES: {
-        GET_ALL: `${process.env.NEXT_PUBLIC_APP_URL}/api/recipe`,
-        GET_ONE: (recipeId: string) => `${process.env.NEXT_PUBLIC_APP_URL}/api/recipe/${recipeId}`,
+        GET_ALL: `${API_URL}/api/recipe`,
+        GET_ONE: (recipeId: string) => `${API_URL}/api/recipe/${recipeId}`,
+        CREATE: `${API_URL}/api/recipe/create`,
     }
 }

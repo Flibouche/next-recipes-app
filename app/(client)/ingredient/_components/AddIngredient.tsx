@@ -6,6 +6,9 @@ import React, { useState } from 'react'
 // Packages
 import toast from 'react-hot-toast';
 
+// Constants
+import { API_ROUTES } from '@/lib/routes';
+
 // Components
 import FormInput from '@/components/FormInput';
 
@@ -29,7 +32,7 @@ export default function AddIngredient({ onIngredientAdded }: AddIngredientProps)
 
         try {
             // 1. Appel de l'API pour ajouter un ingrédient
-            const response: Response = await fetch('/api/ingredient', {
+            const response: Response = await fetch(API_ROUTES.INGREDIENTS.CREATE, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
