@@ -27,7 +27,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         // 3. J'ajoute l'ingrédient en base de données
         const newIngredient: Ingredient = await db.ingredient.create({
-            data: { name: name.trim() }
+            data: { name: name.trim(), slug: name.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-') }
         })
 
         return NextResponse.json<ApiResponse<Ingredient>>({ data: newIngredient, message: "Ingredient created", success: true }, { status: 201 });
