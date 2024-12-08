@@ -1,7 +1,7 @@
 model Recipe {
     id               String             @id @default(auto()) @map("_id") @db.ObjectId
     categoryId       String             @db.ObjectId
-    name             String             @unique
+    name             String             
     imageUrl         String?            @default("https://via.placeholder.com/500")
     cookingTime      Int
     numberOfServings Int

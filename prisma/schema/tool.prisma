@@ -1,6 +1,6 @@
 model Tool {
     id       String       @id @default(auto()) @map("_id") @db.ObjectId
-    name     String       @unique
+    name     String       
     imageUrl String       @default("https://via.placeholder.com/500")
     slug     String       @unique
     recipes  RecipeTool[]
