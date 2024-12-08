@@ -6,13 +6,18 @@ interface Recipe {
     id: string;
     name: string;
     categoryId: string;
-    category: { id: string, name: string };
+    category: Category;
     imageUrl: string | null;
     cookingTime: number;
     numberOfServings: number;
     difficulty: number;
     vegan: boolean;
     healthy: boolean;
+}
+
+interface Category {
+    id: string;
+    name: string;
 }
 
 export async function GET(): Promise<NextResponse> {
