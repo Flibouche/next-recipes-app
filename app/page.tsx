@@ -154,7 +154,7 @@ export default function Home() {
             <section className="md:h-[60vh] lg:h-[80vh] bg-accent-100 py-20">
                 <div className="max-w-screen-xl mx-auto px-6 flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
-                    <p className="text-center text-2xl md:text-3xl">Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors... It's how you combine them that sets you apart. Each meal is a canvas, each ingredient a color, and every chef an artist creating something unique and memorable.</p>
+                    <p className="text-center text-2xl md:text-3xl">Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors... It&apos;s how you combine them that sets you apart. Each meal is a canvas, each ingredient a color, and every chef an artist creating something unique and memorable.</p>
                     <span className="italic md:text-lg">Claude Anthropic - 2024</span>
                 </div>
             </section>
