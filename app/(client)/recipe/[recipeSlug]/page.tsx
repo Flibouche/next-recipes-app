@@ -59,7 +59,7 @@ export default async function DetailedRecipe({ params }: Props) {
 
     return (
         <section className="container pb-10">
-            <div className='flex flex-col lg:flex-row gap-8 p-5 rounded-lg bg-accent-100'>
+            <div className='flex flex-col lg:flex-row gap-8 p-5 rounded-xl bg-accent-100 mb-10'>
                 <div className="relative h-[50vh] w-full lg:w-1/2 overflow-hidden rounded-lg">
                     <Image
                         src={imageUrl || ''}
@@ -94,8 +94,8 @@ export default async function DetailedRecipe({ params }: Props) {
                 </div>
             </div>
 
-            <div className='flex flex-col space-y-2 px-4'>
-                <div>
+            <div className='flex flex-col justify-between lg:flex-row gap-5'>
+                <div className='bg-secondary-100 w-full'>
                     <h2 className='text-2xl font-bold uppercase'>Ingredients</h2>
                     <ul className='flex flex-col space-y-4'>
                         {ingredients.map((ingredient, index) => (
@@ -110,8 +110,8 @@ export default async function DetailedRecipe({ params }: Props) {
                     </ul>
                 </div>
 
-                <div>
-                    <h2>Steps</h2>
+                <div className='bg-secondary-100 w-full'>
+                    <h2 className='text-2xl font-bold uppercase'>Steps</h2>
                     <ul className='flex flex-col space-y-4'>
                         {steps.map((step, index) => (
                             <li key={index}>

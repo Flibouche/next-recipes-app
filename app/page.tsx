@@ -110,7 +110,7 @@ export default function Home() {
             </section>
 
             {/* Sponsors swiper */}
-            <section className="h-[26vh] md:h-[20vh] bg-white">
+            <section className="h-[20vh] bg-white">
                 <Swiper
                     modules={[Autoplay]}
                     slidesPerView={5}
@@ -141,8 +141,8 @@ export default function Home() {
                             <Image
                                 src={sponsor.image}
                                 alt={sponsor.alt}
-                                width={180}
-                                height={300}
+                                width={200}
+                                height={180}
                                 className="grayscale duration-300 ease-in-out hover:grayscale-0"
                             />
                         </SwiperSlide>
@@ -150,18 +150,20 @@ export default function Home() {
                 </Swiper>
             </section>
 
-            <section className="h-[50vh] md:min-h-[65vh] bg-accent-100">
+            {/* Citation */}
+            <section className="md:h-[60vh] lg:h-[80vh] bg-accent-100 py-20">
                 <div className="max-w-screen-xl mx-auto px-6 flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
-                    <p className="text-center text-2xl md:text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
-                    <span className="italic md:text-lg">Lorem ipsum dolor sit amet.</span>
+                    <p className="text-center text-2xl md:text-3xl">Cooking is like painting or writing a song. Just as there are only so many notes or colors, there are only so many flavors... It's how you combine them that sets you apart. Each meal is a canvas, each ingredient a color, and every chef an artist creating something unique and memorable.</p>
+                    <span className="italic md:text-lg">Claude Anthropic - 2024</span>
                 </div>
             </section>
 
-            <section className="md:min-h-[50vh] py-20">
+            {/* About */}
+            <section className="md:h-[60vh] py-20 md:py-0">
                 <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 px-6 md:px-0">
                     {/* Section texte */}
-                    <div className="max-w-screen-xl mx-auto">
+                    <div className="max-w-screen-xl mx-auto px-6">
                         <h2 className="text-4xl font-bold">About</h2>
                         <p className="mt-4 leading-relaxed">
                             Our Chefs offer you perfect cooking, best served dishes with fresh ingredients and old recipes.
@@ -191,6 +193,7 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Last Recipes */}
             <section className="h-[65vh] bg-accent-100">
                 <div className="container flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
