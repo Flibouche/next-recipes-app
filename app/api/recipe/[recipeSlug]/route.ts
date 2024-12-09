@@ -3,12 +3,13 @@ import { ApiResponse } from "@/lib/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
-    params: Promise<{ recipeId: string }>
+    params: Promise<{ recipeSlug: string }>
 }
 
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     categoryId: string;
     category: Category;
     imageUrl: string | null;
@@ -42,10 +43,10 @@ interface Steps {
 
 export async function GET(request: NextRequest, { params }: Props): Promise<NextResponse> {
     try {
-        const { recipeId } = await params;
+        const { recipeSlug } = await params;
 
         const recipe: Recipe | null = await db.recipe.findUnique({
-            where: { id: recipeId },
+            where: { slug: recipeSlug },
             include: {
                 category: true,
                 steps: true,

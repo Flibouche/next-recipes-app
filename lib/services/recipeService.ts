@@ -4,6 +4,7 @@ import { API_ROUTES } from "../routes";
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     categoryId: string;
     category: Category;
     imageUrl: string | null;
@@ -14,7 +15,7 @@ interface Recipe {
     healthy: boolean;
 }
 
-interface RecipeWithID extends Recipe {
+interface RecipeWithSlug extends Recipe {
     ingredients: Ingredients[];
     steps: Steps[];
 }
@@ -61,19 +62,19 @@ export async function fetchRecipes(): Promise<Recipe[]> {
     }
 }
 
-export async function fetchDetailedRecipe(recipeId: string): Promise<RecipeWithID> {
+export async function fetchDetailedRecipe(recipeSlug: string): Promise<RecipeWithSlug> {
     try {
 
-        if (!recipeId) {
-            throw new Error('Recipe ID is required');
+        if (!recipeSlug) {
+            throw new Error('Recipe slug is required');
         }
 
-        const response: Response = await fetch(API_ROUTES.RECIPES.GET_ONE(recipeId), { method: 'GET', cache: 'no-cache' });
+        const response: Response = await fetch(API_ROUTES.RECIPES.GET_ONE(recipeSlug), { method: 'GET', cache: 'no-cache' });
         if (!response.ok) {
             throw new Error('Failed to fetch recipe');
         }
 
-        const data: ApiResponse<RecipeWithID> = await response.json();
+        const data: ApiResponse<RecipeWithSlug> = await response.json();
         if (!data.success) {
             throw new Error(data.message);
         }

@@ -5,14 +5,15 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 
 type Props = {
-    params: Promise<{ recipeId: string }>
+    params: Promise<{ recipeSlug: string }>
 }
 
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     categoryId: string;
-    category: { id: string, name: string };
+    category: Category;
     imageUrl: string | null;
     cookingTime: number;
     numberOfServings: number;
@@ -21,6 +22,11 @@ interface Recipe {
     healthy: boolean;
     ingredients: Ingredients[];
     steps: Steps[];
+}
+
+interface Category {
+    id: string;
+    name: string;
 }
 
 interface Ingredients {
@@ -38,8 +44,8 @@ interface Steps {
 }
 
 export default async function DetailedRecipe({ params }: Props) {
-    const { recipeId } = await params;
-    const data: Recipe = await fetchDetailedRecipe(recipeId);
+    const { recipeSlug } = await params;
+    const data: Recipe = await fetchDetailedRecipe(recipeSlug);
     console.table(data.ingredients[0].ingredient.name);
     if (!data) {
         return notFound();

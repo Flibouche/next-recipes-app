@@ -6,6 +6,7 @@ import { IoMdPerson, IoIosTimer } from 'react-icons/io';
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     imageUrl: string | null;
     category: Category;
     numberOfServings: number;
@@ -17,13 +18,13 @@ interface Category {
     name: string;
 }
 
-const RecipeCard = ({ id, imageUrl, name, category, numberOfServings, cookingTime }: Recipe) => {
+const RecipeCard = ({ id, slug, imageUrl, name, category, numberOfServings, cookingTime }: Recipe) => {
     return (
         <div
             key={id}
             className='group'
         >
-            <Link href={`/recipe/${id}`}>
+            <Link href={`/recipe/${slug}`}>
                 {imageUrl ? (
                     <div className="relative">
                         <div className='overflow-hidden'>

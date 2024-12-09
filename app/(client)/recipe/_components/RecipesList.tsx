@@ -12,6 +12,7 @@ import 'swiper/css/scrollbar';
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     imageUrl: string | null;
     category: Category;
     numberOfServings: number;
@@ -56,6 +57,7 @@ const RecipesList = ({ recipes }: RecipesList) => {
                 <SwiperSlide key={recipe.id}>
                     <RecipeCard
                         id={recipe.id}
+                        slug={recipe.slug}
                         imageUrl={recipe.imageUrl}
                         name={recipe.name}
                         category={recipe.category}

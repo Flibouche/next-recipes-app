@@ -5,6 +5,7 @@ import RecipesList from './_components/RecipesList';
 interface Recipe {
     id: string;
     name: string;
+    slug: string;
     categoryId: string;
     category: Category;
     imageUrl: string | null;
