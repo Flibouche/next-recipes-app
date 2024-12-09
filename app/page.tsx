@@ -79,7 +79,7 @@ export default function Home() {
             {/* Hero */}
             <section className="relative bg-primary-50 py-20 md:min-h-[60vh] lg:min-h-[92vh]">
                 {/* Background image */}
-                <div className="container flex flex-col-reverse items-center gap-10 md:flex-row md:gap-[3%]">
+                <div className="max-w-screen-xl mx-auto px-6 justify-center flex flex-col-reverse items-center gap-10 md:flex-row md:gap-[3%]">
                     <div className="flex w-full justify-center md:w-1/2">
                         <Image
                             src="https://res.cloudinary.com/dqg5ioq7x/image/upload/v1732360066/next-recipe-hero.jpg"
@@ -96,8 +96,8 @@ export default function Home() {
                             className="h-[450px] rounded-bl-xl rounded-br-[10%] rounded-tl-[10%] rounded-tr-xl object-cover md:hidden"
                         />
                     </div>
-                    <div className="container w-full space-y-4 md:w-1/2">
-                        <h1 className="text-4xl font-bold uppercase text-primary md:text-6xl">Your <br /> <span className="text-6xl md:text-8xl">Next.js</span><br />cooking recipe</h1>
+                    <div className="max-w-screen-xl mx-auto px-3 w-full space-y-4 md:w-1/2">
+                        <h1 className="text-4xl font-bold uppercase text-primary md:text-6xl">Your <br /> <span className="text-6xl md:text-7xl lg:text-8xl">Next.js</span><br />cooking recipe</h1>
                         <h2 className="text-xl">Discover Recipes Crafted by Food Lovers, for Food Lovers</h2>
                         <p>Unleash your inner chef with dishes designed to inspire, created with passion, and perfect for every skill level. Join our community and turn everyday meals into extraordinary moments.</p>
                         <Link href="/recipe">
@@ -150,19 +150,19 @@ export default function Home() {
                 </Swiper>
             </section>
 
-            <section className="h-[65vh] bg-accent-100">
-                <div className="container flex h-full flex-col items-center justify-center space-y-5">
+            <section className="h-[50vh] md:min-h-[65vh] bg-accent-100">
+                <div className="max-w-screen-xl mx-auto px-6 flex h-full flex-col items-center justify-center space-y-5">
                     <ImQuotesLeft className="text-4xl text-secondary-800" />
-                    <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
-                    <span className="italic md:text-sm">Lorem ipsum dolor sit amet.</span>
+                    <p className="text-center text-2xl md:text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
+                    <span className="italic md:text-lg">Lorem ipsum dolor sit amet.</span>
                 </div>
             </section>
 
-            <section className="mx-auto">
-                <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+            <section className="md:min-h-[50vh] py-20">
+                <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 px-6 md:px-0">
                     {/* Section texte */}
-                    <div className="sm:container md:pl-24 lg:pl-32">
-                        <h2 className="text-3xl font-bold">About</h2>
+                    <div className="max-w-screen-xl mx-auto">
+                        <h2 className="text-4xl font-bold">About</h2>
                         <p className="mt-4 leading-relaxed">
                             Our Chefs offer you perfect cooking, best served dishes with fresh ingredients and old recipes.
                         </p>
@@ -189,14 +189,14 @@ export default function Home() {
                         />
                     </div>
                 </div>
+            </section>
 
-                <section className="h-[65vh] bg-accent-100">
-                    <div className="container flex h-full flex-col items-center justify-center space-y-5">
-                        <ImQuotesLeft className="text-4xl text-secondary-800" />
-                        <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
-                        <span className="italic md:text-sm">Lorem ipsum dolor sit amet.</span>
-                    </div>
-                </section>
+            <section className="h-[65vh] bg-accent-100">
+                <div className="container flex h-full flex-col items-center justify-center space-y-5">
+                    <ImQuotesLeft className="text-4xl text-secondary-800" />
+                    <p className="text-center text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, tempora! Repellendus, deleniti totam iste omnis, adipisci cum modi qui dicta aperiam eum at delectus quaerat dolore. Consequatur delectus aspernatur deserunt.</p>
+                    <span className="italic md:text-sm">Lorem ipsum dolor sit amet.</span>
+                </div>
             </section>
         </>
     );
