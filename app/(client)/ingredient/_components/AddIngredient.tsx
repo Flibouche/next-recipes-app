@@ -70,6 +70,7 @@ export default function AddIngredient({ onIngredientAdded }: AddIngredientProps)
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder='Name of the ingredient'
+                isRequired={true}
             />
             <button type='submit' className='my-3 rounded-3xl bg-primary px-7 py-3 font-bold text-text-50 hover:bg-primary-700'>Add ingredient</button>
         </form>

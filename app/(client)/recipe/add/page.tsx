@@ -260,6 +260,7 @@ const AddRecipe = () => {
                     // onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     onChange={(e) => handleRecipeChange('name', e.target.value)}
                     placeholder="Name of the recipe"
+                    isRequired={true}
                 />
                 {errors.name && <p className="text-red-500">{errors.name}</p>}
 
@@ -291,6 +292,7 @@ const AddRecipe = () => {
                     value={recipe.imageUrl || ''}
                     onChange={(e) => handleRecipeChange('imageUrl', e.target.value)}
                     placeholder="Image URL"
+                    isRequired={false}
                 />
                 {errors.imageUrl && <p className="text-red-500">{errors.imageUrl}</p>}
 
@@ -303,6 +305,7 @@ const AddRecipe = () => {
                     value={recipe.cookingTime}
                     onChange={(e) => handleRecipeChange('cookingTime', parseInt(e.target.value, 10))}
                     placeholder="Cooking Time"
+                    isRequired={true}
                 />
                 {errors.cookingTime && <p className="text-red-500">{errors.cookingTime}</p>}
 
@@ -315,6 +318,7 @@ const AddRecipe = () => {
                     value={recipe.numberOfServings}
                     onChange={(e) => handleRecipeChange('numberOfServings', parseInt(e.target.value, 10))}
                     placeholder="Number of servings"
+                    isRequired={true}
                 />
                 {errors.numberOfServings && <p className="text-red-500">{errors.numberOfServings}</p>}
 

@@ -43,9 +43,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
         const newRecipe: Recipe = await db.recipe.create({
             data: {
-                name: name.trim(), slug: name.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-'),
+                name: name.trim(),
+                slug: name.trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-'),
                 categoryId,
-                imageUrl,
+                imageUrl: imageUrl || undefined,
                 cookingTime,
                 numberOfServings,
                 difficulty,

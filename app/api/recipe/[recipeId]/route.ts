@@ -40,7 +40,7 @@ interface Steps {
     duration: number;
 }
 
-export async function GET(request: NextRequest, { params }: Props) {
+export async function GET(request: NextRequest, { params }: Props): Promise<NextResponse> {
     try {
         const { recipeId } = await params;
 

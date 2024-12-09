@@ -25,6 +25,7 @@ export interface FormInputProps {
     value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
+    isRequired: boolean;
 }
 
 // Session
