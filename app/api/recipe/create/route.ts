@@ -6,8 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 interface Recipe {
     name: string;
+    slug: string;
     categoryId: string;
-    imageUrl: string | null;
+    imageUrl?: string | null;
     cookingTime: number;
     numberOfServings: number;
     difficulty: number;
