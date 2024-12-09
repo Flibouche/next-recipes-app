@@ -110,7 +110,7 @@ export default function Home() {
             </section>
 
             {/* Sponsors swiper */}
-            <section className="h-[20vh] bg-white">
+            <section className="h-[26vh] md:h-[20vh] bg-white">
                 <Swiper
                     modules={[Autoplay]}
                     slidesPerView={5}
