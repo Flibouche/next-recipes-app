@@ -3,6 +3,8 @@ import { fetchDetailedRecipe } from '@/lib/services/recipeService';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react'
+import { PiCookingPotFill } from "react-icons/pi";
+import { IoMdPerson, IoIosTimer } from 'react-icons/io';
 
 type Props = {
     params: Promise<{ recipeSlug: string }>
@@ -46,31 +48,89 @@ interface Steps {
 export default async function DetailedRecipe({ params }: Props) {
     const { recipeSlug } = await params;
     const data: Recipe = await fetchDetailedRecipe(recipeSlug);
-    console.table(data.ingredients[0].ingredient.name);
+    // console.table(data.ingredients[0].ingredient.name);
+    console.log(data);
     if (!data) {
         return notFound();
     }
 
     // const recipe = data[0];
-    const { id, name, categoryId, category, imageUrl, cookingTime, numberOfServings, difficulty, vegan, healthy } = data;
+    const { id, name, categoryId, category, imageUrl, cookingTime, numberOfServings, difficulty, vegan, healthy, ingredients, steps } = data;
 
     return (
-        <>
-            <p>{id}</p>
-            <h1>{name}</h1>
-            <p>{cookingTime}</p>
-            <p>{categoryId}</p>
-            <p>{category?.name}</p>
-            <Image
-                src={imageUrl || ''}
-                alt={name}
-                width={300}
-                height={300}
-            />
-            <p>{numberOfServings}</p>
-            <p>{difficulty}</p>
-            <p>{vegan ? 'Vegan' : 'Non-Vegan'}</p>
-            <p>{healthy ? 'Healthy' : 'Not Healthy'}</p>
-        </>
+        <section className="min-h-screen py-20">
+            <div className="container">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    <div className="relative h-[30vh] w-[90vw] md:w-[75vw] lg:w-[50vw] overflow-hidden">
+                        <Image
+                            src={imageUrl || ''}
+                            alt={name}
+                            fill
+                            className="rounded-lg object-cover"
+                        />
+                    </div>
+                    <div className='flex flex-col space-y-2 px-4'>
+                        <h1 className='text-3xl font-bold uppercase'>{name}</h1>
+                        <div className='flex flex-row space-x-2 items-center'>
+                            {Array.from({ length: difficulty }, (_, i) => (
+                                <PiCookingPotFill key={i} className='text-primary' />
+                            ))}
+                            <span>({difficulty === 1 ? 'Easy' : difficulty === 2 ? 'Medium' : 'Hard'})</span>
+                        </div>
+                        <div className='flex flex-row justify-start space-x-10'>
+                            <div className='text-center'>
+                                <div className='bg-white rounded-lg w-12 h-12 flex items-center justify-center'>
+                                    <IoIosTimer className='fill-black w-7 h-7' />
+                                </div>
+                                <p>{cookingTime}"</p>
+                            </div>
+
+                            <div className='text-center'>
+                                <div className='bg-white rounded-lg w-12 h-12 flex items-center justify-center'>
+                                    <IoMdPerson className='fill-black w-8 h-8' />
+                                </div>
+                                <p>{numberOfServings}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='flex flex-col space-y-2 px-4'>
+                    <div>
+                        <h2>Ingredients</h2>
+                        <ul className='flex flex-col space-y-4'>
+                            {ingredients.map((ingredient, index) => (
+                                <li className='flex flex-row justify-between' key={index}>
+                                    <span>{ingredient.ingredient.name}</span>
+                                    <div className='space-x-5'>
+                                        <span>{ingredient.quantity}</span>
+                                        <span>{ingredient.unit}</span>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2>Steps</h2>
+                        <ul className='flex flex-col space-y-4'>
+                            {steps.map((step, index) => (
+                                <li key={index}>
+                                    <h3>Step {step.stepNumber}</h3>
+                                    <p>{step.description}</p>
+                                    <p>{step.duration} "</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                {/* <p>{id}</p> */}
+                {/* <p>{categoryId}</p> */}
+                {/* <p>{category?.name}</p>
+                <p>{vegan ? 'Vegan' : 'Non-Vegan'}</p>
+                <p>{healthy ? 'Healthy' : 'Not Healthy'}</p> */}
+            </div>
+        </section>
     );
 }
