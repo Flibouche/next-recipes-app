@@ -4,10 +4,11 @@ import { NextResponse } from 'next/server';
 
 interface Recipe {
     id: string;
+    slug: string;
     name: string;
     categoryId: string;
     category: Category;
-    imageUrl: string | null;
+    imageUrl?: string | null;
     cookingTime: number;
     numberOfServings: number;
     difficulty: number;
@@ -22,9 +23,10 @@ interface Category {
 
 export async function GET(): Promise<NextResponse> {
     try {
-        const recipes: Recipe[] = await db.recipe.findMany({
+        const recipes: readonly Recipe[] = await db.recipe.findMany({
             select: {
                 id: true,
+                slug: true,
                 name: true,
                 categoryId: true,
                 category: true,
@@ -43,7 +45,7 @@ export async function GET(): Promise<NextResponse> {
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Recipes not found", success: false }, { status: 404 });
         }
 
-        return NextResponse.json<ApiResponse<Recipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
+        return NextResponse.json<ApiResponse<readonly Recipe[]>>({ data: recipes, message: "Recipes found", success: true }, { status: 200 });
     } catch (error) {
         if (process.env.NODE_ENV === 'development') {
             console.log("[RECIPES_GET]", error);
