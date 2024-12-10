@@ -60,7 +60,7 @@ export default async function DetailedRecipe({ params }: Props) {
     return (
         <section className="container pb-10">
             <div className='mb-10 flex flex-col gap-8 rounded-xl bg-accent-100 p-5 lg:flex-row'>
-                <div className="relative h-[50vh] w-full overflow-hidden rounded-lg lg:w-1/2">
+                <div className="relative h-[30vh] w-full overflow-hidden rounded-lg md:h-[40vh] lg:w-1/2 xl:h-[50vh]">
                     <Image
                         src={imageUrl || ''}
                         alt={name}
