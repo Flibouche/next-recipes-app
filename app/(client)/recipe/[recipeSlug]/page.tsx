@@ -95,8 +95,10 @@ export default async function DetailedRecipe({ params }: Props) {
             </div>
 
             <div className='flex flex-col justify-between gap-5 lg:flex-row'>
-                <div className='w-full bg-secondary-100'>
+                {/* Ingredients */}
+                <div className='w-full bg-secondary-100 p-4'>
                     <h2 className='text-2xl font-bold uppercase'>Ingredients</h2>
+                    <hr className='mb-10 w-full' />
                     <ul className='flex flex-col space-y-4'>
                         {ingredients.map((ingredient, index) => (
                             <li className='flex flex-row justify-between' key={index}>
@@ -110,14 +112,18 @@ export default async function DetailedRecipe({ params }: Props) {
                     </ul>
                 </div>
 
-                <div className='w-full bg-secondary-100'>
+                {/* Steps */}
+                <div className='w-full bg-secondary-100 p-4'>
                     <h2 className='text-2xl font-bold uppercase'>Steps</h2>
+                    <hr className='mb-10 w-full' />
                     <ul className='flex flex-col space-y-4'>
                         {steps.map((step, index) => (
                             <li key={index}>
-                                <h3>Step {step.stepNumber}</h3>
+                                <div className='flex flex-row justify-between'>
+                                    <h3 className='pb-2 text-xl'>Step {step.stepNumber}</h3>
+                                    <p>{step.duration}&quot;</p>
+                                </div>
                                 <p>{step.description}</p>
-                                <p>{step.duration}&quot;</p>
                             </li>
                         ))}
                     </ul>
