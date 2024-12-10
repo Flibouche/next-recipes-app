@@ -20,7 +20,7 @@ const Breadcrumb = ({ separator, listClasses, activeClasses, capitalizeLinks }: 
     }
 
     return (
-        <ul className='container flex flex-row gap-2 pt-10 mb-2'>
+        <ul className='container mb-2 flex flex-row gap-2 pt-10'>
             {/* Home */}
             <li className={listClasses}>
                 <Link href={'/'}>Home</Link>

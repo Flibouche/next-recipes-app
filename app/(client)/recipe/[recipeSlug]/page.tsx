@@ -59,8 +59,8 @@ export default async function DetailedRecipe({ params }: Props) {
 
     return (
         <section className="container pb-10">
-            <div className='flex flex-col lg:flex-row gap-8 p-5 rounded-xl bg-accent-100 mb-10'>
-                <div className="relative h-[50vh] w-full lg:w-1/2 overflow-hidden rounded-lg">
+            <div className='mb-10 flex flex-col gap-8 rounded-xl bg-accent-100 p-5 lg:flex-row'>
+                <div className="relative h-[50vh] w-full overflow-hidden rounded-lg lg:w-1/2">
                     <Image
                         src={imageUrl || ''}
                         alt={name}
@@ -68,9 +68,9 @@ export default async function DetailedRecipe({ params }: Props) {
                         className="object-cover"
                     />
                 </div>
-                <div className='flex flex-col h-fulls justify-center space-y-6 px-4'>
+                <div className='flex flex-col justify-center space-y-6 px-4'>
                     <h1 className='text-4xl font-bold uppercase'>{name}</h1>
-                    <div className='flex flex-row space-x-2 items-center'>
+                    <div className='flex flex-row items-center space-x-2'>
                         {Array.from({ length: difficulty }, (_, i) => (
                             <PiCookingPotFill key={i} className='text-primary' />
                         ))}
@@ -78,15 +78,15 @@ export default async function DetailedRecipe({ params }: Props) {
                     </div>
                     <div className='flex flex-row justify-start space-x-10'>
                         <div className='text-center'>
-                            <div className='bg-white rounded-lg w-12 h-12 flex items-center justify-center'>
-                                <IoIosTimer className='fill-black w-7 h-7' />
+                            <div className='flex size-12 items-center justify-center rounded-lg bg-white'>
+                                <IoIosTimer className='size-7 fill-black' />
                             </div>
                             <p>{cookingTime}&quot;</p>
                         </div>
 
                         <div className='text-center'>
-                            <div className='bg-white rounded-lg w-12 h-12 flex items-center justify-center'>
-                                <IoMdPerson className='fill-black w-8 h-8' />
+                            <div className='flex size-12 items-center justify-center rounded-lg bg-white'>
+                                <IoMdPerson className='size-8 fill-black' />
                             </div>
                             <p>{numberOfServings}</p>
                         </div>
@@ -94,8 +94,8 @@ export default async function DetailedRecipe({ params }: Props) {
                 </div>
             </div>
 
-            <div className='flex flex-col justify-between lg:flex-row gap-5'>
-                <div className='bg-secondary-100 w-full'>
+            <div className='flex flex-col justify-between gap-5 lg:flex-row'>
+                <div className='w-full bg-secondary-100'>
                     <h2 className='text-2xl font-bold uppercase'>Ingredients</h2>
                     <ul className='flex flex-col space-y-4'>
                         {ingredients.map((ingredient, index) => (
@@ -110,7 +110,7 @@ export default async function DetailedRecipe({ params }: Props) {
                     </ul>
                 </div>
 
-                <div className='bg-secondary-100 w-full'>
+                <div className='w-full bg-secondary-100'>
                     <h2 className='text-2xl font-bold uppercase'>Steps</h2>
                     <ul className='flex flex-col space-y-4'>
                         {steps.map((step, index) => (
