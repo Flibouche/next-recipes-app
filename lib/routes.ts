@@ -7,6 +7,7 @@ export const API_ROUTES = {
     },
     RECIPES: {
         GET_ALL: `${API_URL}/api/recipe`,
+        GET_LAST_ADDED: `${API_URL}/api/recipe?type=lastAdded`,
         GET_ONE: (recipeSlug: string) => `${API_URL}/api/recipe/${recipeSlug}`,
         CREATE: `${API_URL}/api/recipe/create`,
     }

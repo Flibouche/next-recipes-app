@@ -62,6 +62,24 @@ export async function fetchRecipes(): Promise<Recipe[]> {
     }
 }
 
+export async function fetchLastAddedRecipes(): Promise<Recipe[]> {
+    try {
+        const response: Response = await fetch(API_ROUTES.RECIPES.GET_LAST_ADDED, { method: 'GET' });
+        if (!response.ok) {
+            throw new Error('Failed to fetch recipes');
+        }
+
+        const data: ApiResponse<Recipe[]> = await response.json();
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        return data.data ?? [];
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : 'An error occurred');
+    }
+}
+
 export async function fetchDetailedRecipe(recipeSlug: string): Promise<RecipeWithSlug> {
     try {
 
