@@ -11,7 +11,7 @@ interface Tool {
 export async function GET(): Promise<NextResponse> {
     try {
         // 1. Je récupère la liste des outils
-        const tools: Tool[] = await db.ingredient.findMany({
+        const tools: Tool[] = await db.tool.findMany({
             select: {
                 id: true,
                 name: true,
@@ -29,7 +29,7 @@ export async function GET(): Promise<NextResponse> {
         return NextResponse.json<ApiResponse<Tool[]>>({ data: tools, message: "Tools found", success: true }, { status: 200 })
     } catch (error) {
         if (process.env.NODE_ENV === 'development') {
-            console.log("[TOOL_GET]", error);
+            console.log("[TOOLS_GET]", error);
         }
         return NextResponse.json<ApiResponse<null>>({ data: null, message: `Internal Error: ${(error as Error).message}`, success: false }, { status: 500 });
     }
