@@ -20,7 +20,6 @@ export async function GET(): Promise<NextResponse> {
             }
         });
         if (!tags) {
-            console.log(tags);
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Tags not found", success: false }, { status: 404 })
         }
 

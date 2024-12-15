@@ -22,7 +22,6 @@ export async function GET(): Promise<NextResponse> {
             }
         });
         if (!tools) {
-            console.log(tools);
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Tools not found", success: false }, { status: 404 })
         }
 

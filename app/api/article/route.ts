@@ -22,7 +22,6 @@ export async function GET(): Promise<NextResponse> {
             }
         });
         if (!articles) {
-            console.log(articles);
             return NextResponse.json<ApiResponse<null>>({ data: null, message: "Articles not found", success: false }, { status: 404 })
         }
 
