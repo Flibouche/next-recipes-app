@@ -1,4 +1,17 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Recipes
+
+Next Recipes is a web application built with [Next.js](https://nextjs.org) that allows users to discover, share, and manage cooking recipes. The application features a modern design, responsive layout, and various functionalities to enhance the user experience.
+
+## Features
+
+- **Recipe Management**: Add, edit, and delete recipes with detailed information including ingredients, steps, and images.
+- **User Authentication**: Secure user authentication and authorization using Clerk.
+- **Admin Dashboard**: Admin-specific functionalities to manage users and content.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Dark Mode**: Toggle between light and dark themes.
+- **Search Functionality**: Search for recipes and users.
+- **Category and Tag Management**: Organize recipes by categories and tags.
+- **Interactive UI**: Smooth animations and transitions using Tailwind CSS and Headless UI.
 
 ## Getting Started
 
